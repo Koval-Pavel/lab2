@@ -18,12 +18,12 @@
             <td><form:input path="name"  /></td>
         </tr>
         <tr>
-            <td>Group:</td>
-            <td><form:input path="group"/></td>
+            <td>Group ID:</td>
+            <td><form:input path="groupId"/></td>
         </tr>
         <tr>
-            <td>Age:</td>
-            <td><form:input path="age"/></td>
+            <td>Team mate ID:</td>
+            <td><form:input path="groupTeamLeadId"/></td>
         </tr>
         <tr>
             <td></td>
@@ -31,5 +31,12 @@
         </tr>
     </table>
 </form:form>
+
+<ul>
+    <li><a href="./viewAllStudents">View all students</a></li>
+    <li><a href="./viewAllGroups">View all groups</a></li>
+    <li><a href="./findStudent">Find Student</a></li>
+
+</ul>
 </body>
 </html>

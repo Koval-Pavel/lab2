@@ -95,6 +95,11 @@
             <version>5.2.0.RELEASE</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.5.9</version>
+        </dependency>
     </dependencies>
 
     <build>

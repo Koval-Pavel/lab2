@@ -12,27 +12,33 @@
 <html>
 <head>
     <title>All students:</title>
-
-
 </head>
 <body>
+
+    <h2>INFO MESSAGE: </h2>
+    <jsp:text>
+        ${massage}
+    </jsp:text>
+
     <h2>All Students:</h2>
     <table border="2" cellpadding="2" width="60%">
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Group</th>
-            <th>Age</th>
+            <th>Group Name</th>
+            <th>GROUP TEAMMATE ID</th>
             <th>Edit</th>
             <th>Delete</th>
+            <th>CheckBox</th>
         </tr>
+
 <%--        list передаем из studentControllera--%>
         <c:forEach var="student" items="${list}">
             <tr>
                 <td>${student.id}</td>
                 <td>${student.name}</td>
-                <td>${student.group}</td>
-                <td>${student.age}</td>
+                <td>${student.groupName}</td>
+                <td>${student.groupTeamLeadId}</td>
                 <td><a href="editStudent/${student.id}">Edit</a> </td>
                 <td><a href="deleteStudent/${student.id}">Delete</a> </td>
             </tr>
@@ -42,5 +48,10 @@
         <div><td><a href="addStudent">Add new Student Button</a> </td></div>
     </security:authorize>
     <security:csrfInput/>
+    <ul>
+        <li><a href="./viewAllGroups">View all groups</a></li>
+        <li><a href="./findStudent">Find Student</a></li>
+
+    </ul>
 </body>
 </html>

@@ -1,7 +1,9 @@
 package com.nc.lab2.controller;
 
 
+import com.nc.lab2.dao.GroupDAO;
 import com.nc.lab2.dao.StudentDAO;
+import com.nc.lab2.model.Group;
 import com.nc.lab2.model.Student;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,12 +17,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
 @Controller
 //@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class StudentController {
+
+    private String  infoMessage = null;
 
     public static Logger log = LogManager.getLogger();
 
@@ -34,7 +39,10 @@ public class StudentController {
     public ModelAndView viewAllStudents() {
         studentList = studentDAO.getAllStudents();
         log.info("Log inside method VIEW STUDENT (Test)");
-        return new ModelAndView("viewAllStudents", "list", studentList);
+        ModelAndView modelAndView = new ModelAndView("viewAllStudents");
+        modelAndView.addObject("massage",infoMessage);
+        modelAndView.addObject("list",studentList);
+        return modelAndView;
     }
 
     @RequestMapping(value = "/findStudent", method = RequestMethod.GET)
@@ -52,25 +60,32 @@ public class StudentController {
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/addStudent", method = RequestMethod.GET)
     public ModelAndView addStudent() {
-        return new ModelAndView("addStudent", "command", new Student());
-    }
+        ModelAndView modelAndView = new ModelAndView("addStudent");
+        modelAndView.addObject("command",new Student());
+        HashMap< Integer, String> awailableGroups = new HashMap<>();
+        for (Group temp: studentDAO.getAwailGroup()) {
+            awailableGroups.put(temp.getId(), temp.getName());
+        }
+        modelAndView.addObject("name1",awailableGroups);
 
+        return modelAndView;
+
+
+    }
 
     @RequestMapping(value = "/saveStudent", method = RequestMethod.POST)
     public ModelAndView saveStudent(@ModelAttribute Student student) {
-        student.setId(studentDAO.findMaxId().getId() + 1);
-        System.out.println(student);
         studentDAO.addStudent(student);
         return new ModelAndView("redirect:/viewAllStudents");
     }
 
     @RequestMapping(value = "/deleteStudent/{id}", method = RequestMethod.GET)
     public ModelAndView deleteStudent(@PathVariable int id) {
-        studentDAO.removeStudent(findStudentInList(studentList, id));
-        return new ModelAndView("redirect:/viewAllStudents");
+        infoMessage = studentDAO.removeStudent(id);
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + infoMessage);
+        ModelAndView modelAndView = new ModelAndView("redirect:/viewAllStudents");
+        return modelAndView;
     }
-
-
 
     @RequestMapping(value = "/editStudent/editSave", method = RequestMethod.POST)
     public ModelAndView editSave(@ModelAttribute Student student) {
@@ -83,12 +98,21 @@ public class StudentController {
     public ModelAndView editStudent(@PathVariable int id) {
         return new ModelAndView("editStudent", "command", findStudentInList(studentList, id));
     }
+
     public Student findStudentInList(List<Student> studentList, int id) {
         Student student = null;
         for (Student temp: studentList) {
             if (temp.getId() == id) {student = temp;}
         }
         return student;
+    }
+
+//    ------------------------------------------------- Не реализованные методы
+
+    @RequestMapping(value = "/getStudentsWithMark", method = RequestMethod.GET)
+    public ModelAndView getStudentsWithMark() {
+        ModelAndView modelAndView = new ModelAndView("getStudentsWithMark");
+        return modelAndView;
     }
 
 
