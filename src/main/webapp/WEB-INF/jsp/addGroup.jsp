@@ -26,7 +26,9 @@
         </tr>
         <tr>
             <td>Group Head ID:</td>
-            <td><form:input path="headId"/></td>
+            <td>Функционал пока-что не доступен</td>
+
+        <%--            <td><form:input path="headId"/></td>--%>
         </tr>
         <tr>
             <td></td>

@@ -26,7 +26,9 @@
             </tr>
             <tr>
                 <td>Team mate ID:</td>
-                <td><form:input path="groupTeamLeadId"/></td>
+<%--                <td><form:input path="groupTeamLeadId"/></td>--%>
+                <td>Функционал пока-что не доступен</td>
+
             </tr>
             <tr>
                 <td></td>

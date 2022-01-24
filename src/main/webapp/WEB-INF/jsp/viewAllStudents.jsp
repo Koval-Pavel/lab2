@@ -29,7 +29,6 @@
             <th>GROUP TEAMMATE ID</th>
             <th>Edit</th>
             <th>Delete</th>
-            <th>CheckBox</th>
         </tr>
 
 <%--        list передаем из studentControllera--%>

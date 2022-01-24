@@ -22,7 +22,9 @@
                 <td>${group.id}</td>
                 <td>${group.name}</td>
                 <td>${group.facultyName}</td>
-                <td>${group.headName}</td>
+<%--                <td>${group.headName}</td>--%>
+                <td>Функционал пока-что не доступен</td>
+
             </tr>
         </g:forEach>
     </table>

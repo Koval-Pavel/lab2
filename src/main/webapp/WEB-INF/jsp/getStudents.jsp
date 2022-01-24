@@ -14,7 +14,7 @@
             <th>ID</th>
             <th>Name</th>
             <th>Group</th>
-            <th>Age</th>
+<%--            <th>Age</th>--%>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
@@ -24,7 +24,7 @@
                 <td>${student.id}</td>
                 <td>${student.name}</td>
                 <td>${student.group}</td>
-                <td>${student.age}</td>
+<%--                <td>${student.age}</td>--%>
                 <td><a href="editStudent/${student.id}">Edit</a> </td>
                 <td><a href="deleteStudent/${student.id}">Delete</a> </td>
             </tr>
