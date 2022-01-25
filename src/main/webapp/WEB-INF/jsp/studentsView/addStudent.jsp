@@ -9,6 +9,12 @@
     <h2>Add new Student</h2>
     <form:form action="saveStudent" method="post">
         <table>
+<%--            <tr>--%>
+<%--                <td>TEST:</td>--%>
+<%--                <form method="post" action="/addStudent">--%>
+<%--                    <td><input type="text" path="idtest"/></td>--%>
+<%--                </form>--%>
+<%--            </tr>--%>
             <tr>
                 <td>Name:</td>
                 <td><form:input path="name"/></td>

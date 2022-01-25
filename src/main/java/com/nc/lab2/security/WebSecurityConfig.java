@@ -32,6 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/viewAllStudents").authenticated()
                 .antMatchers("/viewAllGroups").authenticated()
                 .antMatchers("/viewAllFacultys").authenticated()
+                .antMatchers("/viewAllSubject").authenticated()
                 .antMatchers("/addStudent").hasRole("ADMIN")
                 .antMatchers("/addFaculty").hasRole("ADMIN")
                 .antMatchers("/addGroup").hasRole("ADMIN")

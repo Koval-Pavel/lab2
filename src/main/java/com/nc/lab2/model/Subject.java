@@ -6,6 +6,10 @@ public class Subject {
     private String name;
     private String TeacherName;
 
+    public Subject() {
+        super();
+    }
+
     public Subject(int id, String name, String teacherName) {
         this.id = id;
         this.name = name;

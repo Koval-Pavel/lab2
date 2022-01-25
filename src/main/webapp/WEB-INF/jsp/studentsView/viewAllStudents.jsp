@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <h2>INFO MESSAGE: </h2>
+    <h1>INFO MESSAGE: </h1>
     <jsp:text>
         ${massage}
     </jsp:text>
@@ -16,7 +16,6 @@
     <h2>All Students:</h2>
     <table border="2" cellpadding="2" width="60%">
         <tr>
-            <th>ID</th>
             <th>Name</th>
             <th>Group Name</th>
             <th>GROUP TEAMMATE ID</th>
@@ -31,8 +30,7 @@
         <c:forEach var="student" items="${list}">
 
             <tr>
-                <td>${student.id}</td>
-                <td>${student.name}</td>
+                <td><a href="studentInfo/${student.id}">${student.name}</a> </td>
                 <td>${student.groupName}</td>
                 <td>${student.teamMate_Name}</td>
                 <security:authorize access="hasRole('ADMIN')">
@@ -51,8 +49,9 @@
     <ul>
         <li><a href="./viewAllFacultys">View all facultys</a></li>
         <li><a href="./viewAllGroups">View all groups</a></li>
+        <li><a href="./viewAllSubjects">View all subject</a></li>
         <li><a href="./findStudent">Find Student</a></li>
-        <li><a href="./logout">LogOut</a></li>
+        <li><a href="./logout">Logout</a></li>
 
     </ul>
 </body>

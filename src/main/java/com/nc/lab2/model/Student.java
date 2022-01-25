@@ -14,7 +14,6 @@ public class Student {
     private HashMap<String, Double > subjectListWithMark;
 
 
-
     public Student() {
         super();
     }

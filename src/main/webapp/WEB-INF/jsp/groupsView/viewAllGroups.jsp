@@ -9,10 +9,14 @@
     <title>All Groups:</title>
 </head>
 <body>
+<h1>INFO MESSAGE: </h1>
+<jsp:text>
+    ${massage}
+</jsp:text>
+
     <h2>All Groups:</h2>
     <table border="2" cellpadding="2" width="60%">
         <tr>
-            <th>ID</th>
             <th>Name</th>
             <th>Faculty Name</th>
             <th>Head Name</th>
@@ -26,7 +30,6 @@
 <%--        list передаем из studentControllera--%>
         <g:forEach var="group" items="${list}">
             <tr>
-                <td>${group.id}</td>
                 <td>${group.name}</td>
                 <td>${group.facultyName}</td>
                 <td>${group.headName}</td>
@@ -46,8 +49,10 @@
     <ul>
         <li><a href="./viewAllFacultys">View all facultys</a></li>
         <li><a href="./viewAllStudents">View all students</a></li>
+        <li><a href="./viewAllSubjects">View all subject</a></li>
         <li><a href="./findStudent">Find Student</a></li>
-        <li><a href="./logout">LogOut</a></li>
+        <li><a href="./logout">Find Student</a></li>
+
 
     </ul>
 </body>

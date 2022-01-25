@@ -3,6 +3,8 @@ package com.nc.lab2.dao;
 
 import com.nc.lab2.mapper.FacultyMapper;
 import com.nc.lab2.mapper.GroupMapper;
+import com.nc.lab2.mapper.StudentMapper;
+import com.nc.lab2.mapper.SubjectMapper;
 import com.nc.lab2.model.Faculty;
 import com.nc.lab2.model.Group;
 import com.nc.lab2.model.Student;
@@ -26,41 +28,35 @@ public class SubjectDAO extends JdbcDaoSupport {
         this.setDataSource(dataSource);
     }
 
-
-    //    ------------------------------------------------- Не реализованные методы
-
     public List<Subject> getAllSubject() {
         List<Subject> subjectList = null;
-//        String sql =  "SELECT * FROM ST_GROUP LEFT JOIN STUDENTS ON ST_ID = GR_HEAD_ID LEFT JOIN FACULTYS  on FAC_ID = GR_FAC_ID";
-//        Object[] params = new Object[] {};
-//        GroupMapper mapper = new GroupMapper() {
-//            @Override
-//            public Group mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-//                Group group = null;
-//                int group_id = resultSet.getInt("GR_ID");
-//                String group_name = resultSet.getString("GR_NAME");
-//                String group_fac = resultSet.getString("FAC_NAME");
-//                String head_name =resultSet.getString("ST_NAME"); // tab STUDENTS Name
-//                group = new Group(group_id, group_name, group_fac ,head_name);
-//                return group;
-//            }
-//        };
-//
-//        groupList = this.getJdbcTemplate().query(sql, params, mapper);
+        String sql =  "SELECT * FROM SUBJECTS";
+        Object[] params = new Object[] {};
+        SubjectMapper mapper = new SubjectMapper() ;
+        subjectList = this.getJdbcTemplate().query(sql, params, mapper);
         return subjectList;
     }
 
     public void addSubject (Subject subject) {
-//        String sqlUpdate = null;
-//        if (group.getFacultyId() == 0){
-//            sqlUpdate = "INSERT INTO ST_GROUP ( GR_NAME, GR_FAC_ID, GR_HEAD_ID) VALUES " +
-//                    "('" + group.getName() + "', " + null + ", " + group.getHeadId() + ")";
-//        } else {
-//
-//            sqlUpdate = "INSERT INTO ST_GROUP (GR_NAME, GR_FAC_ID, GR_HEAD_ID) VALUES " +
-//                    "('" + group.getName() + "', " + group.getFacultyId() + ", " + null + ")"; // Временно добавляю нулл а вообще group.getHeadId()
-//        }
-//        this.getJdbcTemplate().update(sqlUpdate);
+        String sqlUpdate;
+            sqlUpdate = "INSERT INTO SUBJECTS (SUB_NAME, SUB_TEACHER_NAME) VALUES (?, ?)";
+        this.getJdbcTemplate().update(sqlUpdate, subject.getName(), subject.getTeacherName());
+    }
+
+    public String removeSubject(int id) {
+        String infoMessage;
+        String sqlUpdate2 = " DELETE FROM SUBJECTS WHERE SUB_ID = ?" ;
+        this.getJdbcTemplate().update(sqlUpdate2,  id);
+        infoMessage = "Deleted";
+        return infoMessage;
+    }
+
+    public String saveSubject(Subject subject) {
+        String infoMessage = null;
+        String sqlUpdate;
+            sqlUpdate = "UPDATE SUBJECTS set SUB_NAME = ?, SUB_TEACHER_NAME = ? where SUB_ID = ?" ;
+                this.getJdbcTemplate().update(sqlUpdate, subject.getName(), subject.getTeacherName(), subject.getId());
+        return infoMessage;
     }
 
 }

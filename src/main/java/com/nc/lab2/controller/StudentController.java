@@ -9,12 +9,10 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.sound.midi.Soundbank;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +36,7 @@ public class StudentController {
     public ModelAndView viewAllStudents() {
         studentList = studentDAO.getAllStudents();
         log.info("Log inside method VIEW STUDENT (Test)");
-        ModelAndView modelAndView = new ModelAndView("viewAllStudents");
+        ModelAndView modelAndView = new ModelAndView("studentsView/viewAllStudents");
         modelAndView.addObject("massage",infoMessage);
         infoMessage = null;
         modelAndView.addObject("list",studentList);
@@ -47,20 +45,20 @@ public class StudentController {
 
     @RequestMapping(value = "/findStudent", method = RequestMethod.GET)
     public ModelAndView findStudent() {
-        return new ModelAndView("findStudent", "command", new Student());
+        return new ModelAndView("studentsView/findStudent", "command", new Student());
     }
 
     @RequestMapping(value = "/getStudent", method = RequestMethod.POST)
     public ModelAndView getStudent(@ModelAttribute Student student) {
         List<Student> studentList = new ArrayList();
         studentList = (studentDAO.findStudentAccount(student.getName()));
-        return new ModelAndView("viewAllStudents", "list", studentList);
+        return new ModelAndView("studentsView/viewAllStudents", "list", studentList);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/addStudent", method = RequestMethod.GET)
     public ModelAndView addStudent() {
-        ModelAndView modelAndView = new ModelAndView("addStudent");
+        ModelAndView modelAndView = new ModelAndView("studentsView/addStudent");
         modelAndView.addObject("command", new Student());
         HashMap< Integer, String> awailableGroups = new HashMap<>();
         for (Group temp: studentDAO.getAwailGroup()) {
@@ -94,7 +92,7 @@ public class StudentController {
     @RequestMapping(value = "/editStudent/{id}", method = RequestMethod.GET)
     public ModelAndView editStudent(@PathVariable int id) {
         idForEdit = id;
-        ModelAndView modelAndView = new ModelAndView("editStudent");
+        ModelAndView modelAndView = new ModelAndView("studentsView/editStudent");
         modelAndView.addObject("command",findStudentInList(studentList, id));
         HashMap< Integer, String> awailableGroups = new HashMap<>();
         for (Group temp: studentDAO.getAwailGroup()) {
@@ -114,9 +112,9 @@ public class StudentController {
 
 //    ------------------------------------------------- Не реализованные методы
 
-    @RequestMapping(value = "/getStudentsWithMark", method = RequestMethod.GET)
-    public ModelAndView getStudentsWithMark() {
-        return new ModelAndView("getStudentsWithMark");
+    @RequestMapping(value = "/studentInfo/{id}", method = RequestMethod.GET)
+    public ModelAndView studentInfo(@PathVariable int id) {
+        return new ModelAndView("studentsView/studentInfo");
     }
 
 

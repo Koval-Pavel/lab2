@@ -38,13 +38,17 @@ public class GroupController {
     public ModelAndView viewAllGroups() {
         groupList = groupDAO.getAllGroup();
         log.info("Log inside method VIEW STUDENT (Test)");
-        return new ModelAndView("viewAllGroups", "list", groupList);
+        ModelAndView modelAndView = new ModelAndView("groupsView/viewAllGroups");
+        modelAndView.addObject("massage",infoMessageGroup);
+        infoMessageGroup = null;
+        modelAndView.addObject("list", groupList);
+        return modelAndView;
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/addGroup", method = RequestMethod.GET)
     public ModelAndView addGroup() {
-        ModelAndView modelAndView = new ModelAndView("addGroup");
+        ModelAndView modelAndView = new ModelAndView("groupsView/addGroup");
         modelAndView.addObject("command",new Group());
         HashMap< Integer, String> awailableFaculty = new HashMap<>();
         for (Faculty temp: groupDAO.getAwailFaculty()) {
@@ -56,7 +60,7 @@ public class GroupController {
 
     @RequestMapping(value = "/saveGroup", method = RequestMethod.POST)
     public ModelAndView saveStudent(@ModelAttribute Group group) {
-        groupDAO.addGroup(group);
+        infoMessageGroup = groupDAO.addGroup(group);
         return new ModelAndView("redirect:/viewAllGroups");
     }
 
@@ -76,7 +80,7 @@ public class GroupController {
     @RequestMapping(value = "/editGroup/{id}", method = RequestMethod.GET)
     public ModelAndView editGroup(@PathVariable int id) {
         idForEdit = id;
-        ModelAndView modelAndView = new ModelAndView("editGroup");
+        ModelAndView modelAndView = new ModelAndView("groupsView/editGroup");
         modelAndView.addObject("command",findGroupInList(groupList, id));
         HashMap< Integer, String> awailableFaculty = new HashMap<>();
         for (Faculty temp: groupDAO.getAwailFaculty()) {
@@ -94,9 +98,11 @@ public class GroupController {
         return group;
     }
 
+
+//    ---------------------------------------------------
     @RequestMapping(value = "/getGroupStudents", method = RequestMethod.GET)
     public ModelAndView getGroupStudents() {
-        return new ModelAndView("getGroupStudents");
+        return new ModelAndView("groupsView/getGroupStudents");
     }
 
 }
