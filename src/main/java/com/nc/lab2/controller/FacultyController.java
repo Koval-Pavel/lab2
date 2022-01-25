@@ -2,10 +2,7 @@ package com.nc.lab2.controller;
 
 
 import com.nc.lab2.dao.FacultyDAO;
-import com.nc.lab2.dao.GroupDAO;
 import com.nc.lab2.model.Faculty;
-import com.nc.lab2.model.Group;
-import com.nc.lab2.model.Student;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -32,8 +28,6 @@ public class FacultyController {
 
     @Autowired
     private FacultyDAO facultyDAO;
-
-    //    ------------------------------------------------- Не реализованные методы
 
     @RequestMapping(value = "/viewAllFacultys", method = RequestMethod.GET)
     public ModelAndView viewAllGroups() {

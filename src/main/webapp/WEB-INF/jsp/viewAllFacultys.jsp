@@ -1,6 +1,8 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="g"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
+
 
 <html>
 <head>
@@ -32,6 +34,8 @@
     <li><a href="./viewAllStudents">View all students</a></li>
     <li><a href="./viewAllGroups">View all groups</a></li>
     <li><a href="./findStudent">Find Student</a></li>
+    <li><a href="./logout">LogOut</a></li>
+
 </ul>
 </body>
 </html>

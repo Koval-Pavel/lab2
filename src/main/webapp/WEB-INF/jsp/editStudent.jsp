@@ -1,5 +1,6 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html>
 <head>
@@ -7,25 +8,27 @@
 </head>
 <body>
 <h2>Edit Student:</h2>
-<form:form action="editSave" method="post">
+<form:form action="editSaveStudent" method="post">
     <table>
-<%--        <tr>--%>
-<%--            <td>ID:</td>--%>
-<%--            <td><form:input path="id"  /></td>--%>
-<%--        </tr>--%>
         <tr>
             <td>Name:</td>
             <td><form:input path="name"  /></td>
         </tr>
         <tr>
-            <td>Group ID:</td>
-            <td><form:input path="groupId"/></td>
+            <td>Group:</td>
+            <td>
+                <select name="groupId" id="groupId">
+                    <option value="0" selected="selected"></option>
+                    <c:forEach var="groupId" items="${name1}">
+                        <option value="${groupId.key}">${groupId.value}</option>
+                    </c:forEach>
+                </select>
+            </td>
         </tr>
         <tr>
-            <td>Team mate ID:</td>
-<%--            <td><form:input path="groupTeamLeadId"/></td>--%>
-            <td>Функционал пока-что не доступен</td>
-
+            <td>Team mate Name:</td>
+            <td><form:input path="teamMate_Name"/></td>
+            <td>(Input team-mate name from table)</td>
         </tr>
 
         <tr>

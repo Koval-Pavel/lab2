@@ -3,6 +3,7 @@ package com.nc.lab2.dao;
 
 import com.nc.lab2.mapper.FacultyMapper;
 import com.nc.lab2.mapper.GroupMapper;
+import com.nc.lab2.mapper.StudentMapper;
 import com.nc.lab2.model.Faculty;
 import com.nc.lab2.model.Group;
 import com.nc.lab2.model.Student;
@@ -32,7 +33,7 @@ public class GroupDAO extends JdbcDaoSupport {
         GroupMapper mapper = new GroupMapper() {
             @Override
             public Group mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-                Group group = null;
+                Group group;
                 int group_id = resultSet.getInt("GR_ID");
                 String group_name = resultSet.getString("GR_NAME");
                 String group_fac = resultSet.getString("FAC_NAME");
@@ -41,22 +42,39 @@ public class GroupDAO extends JdbcDaoSupport {
                 return group;
             }
         };
-
         groupList = this.getJdbcTemplate().query(sql, params, mapper);
         return groupList;
     }
 
-    public void addGroup (Group group) {
-        String sqlUpdate = null;
-        if (group.getFacultyId() == 0){
-            sqlUpdate = "INSERT INTO ST_GROUP ( GR_NAME, GR_FAC_ID, GR_HEAD_ID) VALUES " +
-                    "('" + group.getName() + "', " + null + ", " + group.getHeadId() + ")";
+    public String addGroup (Group group) {
+        String infoMessage = null;
+        String sqlUpdate;
+        List<Student> GroupHead;
+        if (!group.getHeadName().equals("")) {
+            sqlUpdate = "SELECT * FROM STUDENTS WHERE ST_NAME = '" + group.getHeadName() + "'";
+            Object[] params = new Object[]{};
+            StudentMapper mapper = new StudentMapper();
+            GroupHead = this.getJdbcTemplate().query(sqlUpdate, params, mapper);
+            if (GroupHead.isEmpty()) {
+                infoMessage = "No Students with this name";
+            } else {
+                sqlUpdate =  "INSERT INTO ST_GROUP (GR_NAME, GR_FAC_ID, GR_HEAD_ID) VALUES " +
+                        "('" + group.getName() + "', " + group.getFacultyId() + ", " + GroupHead.get(0).getId() + ")";
+                this.getJdbcTemplate().update(sqlUpdate);
+            }
         } else {
+            if (group.getFacultyId() == 0) {
+                sqlUpdate = "INSERT INTO ST_GROUP ( GR_NAME, GR_FAC_ID, GR_HEAD_ID) VALUES " +
+                        "('" + group.getName() + "', " + null + ", " + null + ")";
+            } else {
 
-            sqlUpdate = "INSERT INTO ST_GROUP (GR_NAME, GR_FAC_ID, GR_HEAD_ID) VALUES " +
-                    "('" + group.getName() + "', " + group.getFacultyId() + ", " + null + ")"; // Временно добавляю нулл а вообще group.getHeadId()
+                sqlUpdate = "INSERT INTO ST_GROUP (GR_NAME, GR_FAC_ID, GR_HEAD_ID) VALUES " +
+                        "('" + group.getName() + "', " + group.getFacultyId() + ", " + null + ")"; // Временно добавляю нулл а вообще group.getHeadId()
+            }
+
+            this.getJdbcTemplate().update(sqlUpdate);
         }
-        this.getJdbcTemplate().update(sqlUpdate);
+        return infoMessage;
     }
 
     public List<Faculty> getAwailFaculty() {
@@ -67,7 +85,7 @@ public class GroupDAO extends JdbcDaoSupport {
 
             @Override
             public Faculty mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-                Faculty faculty = null;
+                Faculty faculty;
                 int faculty_id = resultSet.getInt("FAC_ID");
                 String faculty_name = resultSet.getString("FAC_NAME");
                 faculty = new Faculty(faculty_id, faculty_name);
@@ -78,40 +96,50 @@ public class GroupDAO extends JdbcDaoSupport {
         return facultyList;
     }
 
+    public String removeGroup(int id) {
+        String infoMessage;
+        String sqlUpdate1 = " UPDATE STUDENTS set ST_GR_ID = null WHERE ST_GR_ID = ?" ;
+        this.getJdbcTemplate().update(sqlUpdate1,  id);
+        String sqlUpdate2 = " DELETE FROM ST_GROUP WHERE GR_ID = ?" ;
+        this.getJdbcTemplate().update(sqlUpdate2,  id);
+        infoMessage = "Deleted";
+        return infoMessage;
+    }
+
+    public String saveGroup(Group group) {
+        String infoMessage = null;
+        String sqlUpdate;
+        List<Student> GroupHead;
+        if (!group.getHeadName().equals("")) {
+            sqlUpdate = "SELECT * FROM STUDENTS WHERE ST_NAME = '" + group.getHeadName() + "'";
+            Object[] params = new Object[]{};
+            StudentMapper mapper = new StudentMapper();
+            GroupHead = this.getJdbcTemplate().query(sqlUpdate, params, mapper);
+            if (GroupHead.isEmpty()) {
+                infoMessage = "No Students with this name";
+            } else {
+                sqlUpdate = "UPDATE ST_GROUP set GR_NAME = ?, GR_FAC_ID = ?, GR_HEAD_ID = ? WHERE GR_ID = ?";
+                this.getJdbcTemplate().update(sqlUpdate, group.getName(),
+                        group.getFacultyId() == 0? null : group.getFacultyId(), GroupHead.get(0).getId(), group.getId());
+            }
+        } else {
+            // подкорректировать, можно не добавлять head_ИД
+            sqlUpdate = "UPDATE ST_GROUP set GR_NAME = ?, GR_FAC_ID = ?, GR_HEAD_ID = ? where GR_ID = ?" ;
+            if (group.getFacultyId() == 0) {
+                this.getJdbcTemplate().update(sqlUpdate, group.getName(),
+                        null, group.getHeadId() == 0? null : group.getHeadId(), group.getId());
+            } else {
+                this.getJdbcTemplate().update(sqlUpdate, group.getName(), group.getFacultyId(),
+                        group.getHeadId() == 0? null : group.getHeadId(), group.getId());
+            }
+        }
+        return infoMessage;
+    }
+
 ////    ------------------------------------------------- Не реализованные методы
 
     public List<Student> getGroupStudents() {
         List<Student> GroupStudentsList = null;
         return GroupStudentsList;
     }
-
-    public void saveGroup(Group group) {
-//        String sqlUpdate = "UPDATE STUDENTS set ST_NAME = ?, ST_GR_ID = ?, ST_TEAMMATE_ID = ? where ST_ID = ?" ;
-//
-//        if (student.getGroupId() == 0) {
-//            this.getJdbcTemplate().update(sqlUpdate, student.getName(), null, student.getGroupTeamLeadId(), student.getId());
-//
-//        } else {
-//            this.getJdbcTemplate().update(sqlUpdate, student.getName(), student.getGroupId(), student.getGroupTeamLeadId(), student.getId());
-//        }
-    }
-
-    public String removeGroup(int id) {
-        List<Faculty> groupList;
-        String infoMessage = null;
-//        String sqlUpdate = " SELECT * FROM ST_GROUP WHERE GR_HEAD_ID = ?";
-//        Object[] params = new Object[] { id };
-//        GroupMapper mapper = new GroupMapper();
-//        studentList = this.getJdbcTemplate().query(sqlUpdate, params,  mapper);
-//        if (studentList.isEmpty()) {
-//            String sqlUpdate1 = " DELETE FROM STUDENTS WHERE ST_ID = ?" ;
-//            this.getJdbcTemplate().update(sqlUpdate1,  id);
-//            infoMessage = "Deleted";
-//        } else {
-//            infoMessage = "Student is Group Head, Edit Group and choose other Head";
-//        }
-        return infoMessage;
-    }
-
-
 }

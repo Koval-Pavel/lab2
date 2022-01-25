@@ -32,12 +32,12 @@ public class SubjectController {
     //    ------------------------------------------------- Не реализованные методы
 
 
-    @RequestMapping(value = "/viewAllSubjects", method = RequestMethod.GET)
-    public ModelAndView viewAllSubjects() {
-        subjectList = subjectDAO.getAllSubject();
-        log.info("Log inside method VIEW STUDENT (Test)");
-        return new ModelAndView("viewAllGroups", "list", subjectList);
-    }
+//    @RequestMapping(value = "/viewAllSubjects", method = RequestMethod.GET)
+//    public ModelAndView viewAllSubjects() {
+//        subjectList = subjectDAO.getAllSubject();
+//        log.info("Log inside method VIEW STUDENT (Test)");
+//        return new ModelAndView("viewAllGroups", "list", subjectList);
+//    }
 
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/addSubject", method = RequestMethod.GET)

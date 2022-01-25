@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Pavel
-  Date: 15.01.2022
-  Time: 11:57
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
@@ -27,19 +20,27 @@
             <th>Name</th>
             <th>Group Name</th>
             <th>GROUP TEAMMATE ID</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <security:authorize access="hasRole('ADMIN')">
+                <th>Edit</th>
+                <th>Delete</th>
+            </security:authorize>
+            <security:csrfInput/>
+
         </tr>
 
-<%--        list передаем из studentControllera--%>
         <c:forEach var="student" items="${list}">
+
             <tr>
                 <td>${student.id}</td>
                 <td>${student.name}</td>
                 <td>${student.groupName}</td>
-                <td>${student.groupTeamLeadId}</td>
-                <td><a href="editStudent/${student.id}">Edit</a> </td>
-                <td><a href="deleteStudent/${student.id}">Delete</a> </td>
+                <td>${student.teamMate_Name}</td>
+                <security:authorize access="hasRole('ADMIN')">
+                    <td><a href="editStudent/${student.id}">Edit</a> </td>
+                    <td><a href="deleteStudent/${student.id}">Delete</a> </td>
+                </security:authorize>
+                <security:csrfInput/>
+
             </tr>
         </c:forEach>
     </table>
@@ -50,6 +51,7 @@
     <ul>
         <li><a href="./viewAllGroups">View all groups</a></li>
         <li><a href="./findStudent">Find Student</a></li>
+        <li><a href="./logout">LogOut</a></li>
 
     </ul>
 </body>

@@ -51,6 +51,15 @@ public class Group {
         HeadName = headName;
     }
 
+    public Group(int id, String name, int facultyId, int headId, String headName, String facultyName) {
+        this.id = id;
+        this.name = name;
+        FacultyId = facultyId;
+        this.headId = headId;
+        HeadName = headName;
+        FacultyName = facultyName;
+    }
+
     public int getId() {
         return id;
     }

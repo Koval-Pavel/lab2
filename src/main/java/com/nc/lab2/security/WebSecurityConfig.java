@@ -30,12 +30,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/index", "/").permitAll()
                 .antMatchers("/viewAllStudents").authenticated()
+                .antMatchers("/viewAllGroups").authenticated()
+                .antMatchers("/viewAllFacultys").authenticated()
                 .antMatchers("/addStudent").hasRole("ADMIN")
+                .antMatchers("/addFaculty").hasRole("ADMIN")
+                .antMatchers("/addGroup").hasRole("ADMIN")
+                .antMatchers("/addGroup").hasRole("ADMIN")
                 .and()
                 .formLogin()
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+
 
     }
 }

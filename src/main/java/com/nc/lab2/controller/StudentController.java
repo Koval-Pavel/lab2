@@ -1,7 +1,6 @@
 package com.nc.lab2.controller;
 
 
-import com.nc.lab2.dao.GroupDAO;
 import com.nc.lab2.dao.StudentDAO;
 import com.nc.lab2.model.Group;
 import com.nc.lab2.model.Student;
@@ -30,7 +29,7 @@ public class StudentController {
     public static Logger log = LogManager.getLogger();
 
     private static List<Student> studentList = new ArrayList();
-    private static int counter = 0;
+    private int idForEdit = 0;
 
     @Autowired
     private StudentDAO studentDAO;
@@ -41,6 +40,7 @@ public class StudentController {
         log.info("Log inside method VIEW STUDENT (Test)");
         ModelAndView modelAndView = new ModelAndView("viewAllStudents");
         modelAndView.addObject("massage",infoMessage);
+        infoMessage = null;
         modelAndView.addObject("list",studentList);
         return modelAndView;
     }
@@ -61,7 +61,7 @@ public class StudentController {
     @RequestMapping(value = "/addStudent", method = RequestMethod.GET)
     public ModelAndView addStudent() {
         ModelAndView modelAndView = new ModelAndView("addStudent");
-        modelAndView.addObject("command",new Student());
+        modelAndView.addObject("command", new Student());
         HashMap< Integer, String> awailableGroups = new HashMap<>();
         for (Group temp: studentDAO.getAwailGroup()) {
             awailableGroups.put(temp.getId(), temp.getName());
@@ -69,34 +69,39 @@ public class StudentController {
         modelAndView.addObject("name1",awailableGroups);
 
         return modelAndView;
-
-
     }
 
+    // к методу адд (сейв после адд формы)
     @RequestMapping(value = "/saveStudent", method = RequestMethod.POST)
     public ModelAndView saveStudent(@ModelAttribute Student student) {
-        studentDAO.addStudent(student);
+        infoMessage = studentDAO.addStudent(student);
         return new ModelAndView("redirect:/viewAllStudents");
     }
 
     @RequestMapping(value = "/deleteStudent/{id}", method = RequestMethod.GET)
     public ModelAndView deleteStudent(@PathVariable int id) {
         infoMessage = studentDAO.removeStudent(id);
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + infoMessage);
-        ModelAndView modelAndView = new ModelAndView("redirect:/viewAllStudents");
-        return modelAndView;
+        return new ModelAndView("redirect:/viewAllStudents");
     }
 
-    @RequestMapping(value = "/editStudent/editSave", method = RequestMethod.POST)
-    public ModelAndView editSave(@ModelAttribute Student student) {
-        System.out.println(student);
-        studentDAO.saveStudent(student);
+    @RequestMapping(value = "/editStudent/editSaveStudent", method = RequestMethod.POST)
+    public ModelAndView editSaveStudent(@ModelAttribute Student student) {
+        student.setId(idForEdit);
+        infoMessage = studentDAO.saveStudent(student);
         return new ModelAndView("redirect:/viewAllStudents");
     }
 
     @RequestMapping(value = "/editStudent/{id}", method = RequestMethod.GET)
     public ModelAndView editStudent(@PathVariable int id) {
-        return new ModelAndView("editStudent", "command", findStudentInList(studentList, id));
+        idForEdit = id;
+        ModelAndView modelAndView = new ModelAndView("editStudent");
+        modelAndView.addObject("command",findStudentInList(studentList, id));
+        HashMap< Integer, String> awailableGroups = new HashMap<>();
+        for (Group temp: studentDAO.getAwailGroup()) {
+            awailableGroups.put(temp.getId(), temp.getName());
+        }
+        modelAndView.addObject("name1",awailableGroups);
+        return modelAndView;
     }
 
     public Student findStudentInList(List<Student> studentList, int id) {
@@ -111,8 +116,7 @@ public class StudentController {
 
     @RequestMapping(value = "/getStudentsWithMark", method = RequestMethod.GET)
     public ModelAndView getStudentsWithMark() {
-        ModelAndView modelAndView = new ModelAndView("getStudentsWithMark");
-        return modelAndView;
+        return new ModelAndView("getStudentsWithMark");
     }
 
 

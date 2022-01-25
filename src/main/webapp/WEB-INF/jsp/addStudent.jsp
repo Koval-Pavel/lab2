@@ -24,10 +24,28 @@
                     </select>
                 </td>
             </tr>
+
+<%--            <tr>--%>
+<%--                <td>TeamLead:</td>--%>
+<%--                <td>--%>
+<%--&lt;%&ndash;                    <select name="teamLeader" id="teamLeader">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        <option value="0" selected="selected"></option>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        <c:forEach var="teamLeader" items="${name2}">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                            <option value="${teamLeader.key}">${teamLeader.value}</option>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        </c:forEach>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                    </select>&ndash;%&gt;--%>
+<%--                    <select name="teamLeader" id="teamLeader">--%>
+<%--                        <option value="0"> "NO"</option>--%>
+<%--                        <option value="1" > "YES"</option>--%>
+<%--                    </select>--%>
+<%--                </td>--%>
+<%--            </tr>--%>
+
+
             <tr>
                 <td>Team mate ID:</td>
-<%--                <td><form:input path="groupTeamLeadId"/></td>--%>
-                <td>Функционал пока-что не доступен</td>
+                <td><form:input path="teamMate_Name"/></td>
+                <td>(Input team-mate name from students table)</td>
 
             </tr>
             <tr>

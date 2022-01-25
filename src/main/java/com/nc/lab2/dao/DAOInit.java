@@ -32,7 +32,7 @@ public class DAOInit {
     @EventListener(ApplicationReadyEvent.class)
     public void DBInit () {
         try {
-           studentDAO.getAllStudents();
+           studentDAO.check();
         } catch (Exception b) {
             try {
                 Class.forName(driver);

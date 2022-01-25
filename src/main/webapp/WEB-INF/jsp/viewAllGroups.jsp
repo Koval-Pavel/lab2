@@ -1,6 +1,8 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="g"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
+
 
 <html>
 <head>
@@ -14,6 +16,11 @@
             <th>Name</th>
             <th>Faculty Name</th>
             <th>Head Name</th>
+            <security:authorize access="hasRole('ADMIN')">
+            <th>Edit</th>
+            <th>Delete</th>
+            </security:authorize>
+            <security:csrfInput/>
         </tr>
 
 <%--        list передаем из studentControllera--%>
@@ -22,8 +29,12 @@
                 <td>${group.id}</td>
                 <td>${group.name}</td>
                 <td>${group.facultyName}</td>
-<%--                <td>${group.headName}</td>--%>
-                <td>Функционал пока-что не доступен</td>
+                <td>${group.headName}</td>
+                <security:authorize access="hasRole('ADMIN')">
+                <td><a href="editGroup/${group.id}">Edit</a> </td>
+                <td><a href="deleteGroup/${group.id}">Delete</a> </td>
+                </security:authorize>
+                <security:csrfInput/>
 
             </tr>
         </g:forEach>
@@ -35,6 +46,8 @@
     <ul>
         <li><a href="./viewAllStudents">View all students</a></li>
         <li><a href="./findStudent">Find Student</a></li>
+        <li><a href="./logout">LogOut</a></li>
+
     </ul>
 </body>
 </html>

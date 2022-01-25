@@ -4,7 +4,6 @@ package com.nc.lab2.controller;
 import com.nc.lab2.dao.GroupDAO;
 import com.nc.lab2.model.Faculty;
 import com.nc.lab2.model.Group;
-import com.nc.lab2.model.Student;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,9 @@ public class GroupController {
     public static Logger log = LogManager.getLogger();
 
     private static List<Group> groupList = new ArrayList();
-    private static int counter = 0;
+    private  int idForEdit = 0;
+    private static String infoMessageGroup;
+
 
     @Autowired
     private GroupDAO groupDAO;
@@ -36,7 +37,6 @@ public class GroupController {
     @RequestMapping(value = "/viewAllGroups", method = RequestMethod.GET)
     public ModelAndView viewAllGroups() {
         groupList = groupDAO.getAllGroup();
-        System.out.println(groupList + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         log.info("Log inside method VIEW STUDENT (Test)");
         return new ModelAndView("viewAllGroups", "list", groupList);
     }
@@ -51,7 +51,6 @@ public class GroupController {
             awailableFaculty.put(temp.getId(), temp.getName());
         }
         modelAndView.addObject("name1",awailableFaculty);
-
         return modelAndView;
     }
 
@@ -61,30 +60,30 @@ public class GroupController {
         return new ModelAndView("redirect:/viewAllGroups");
     }
 
-//    //    ------------------------------------------------- Не реализованные методы
-
-    @RequestMapping(value = "/getGroupStudents", method = RequestMethod.GET)
-    public ModelAndView getGroupStudents() {
-        ModelAndView modelAndView = new ModelAndView("getGroupStudents");
-        return modelAndView;
-    }
-
     @RequestMapping(value = "/deleteGroup/{id}", method = RequestMethod.GET)
     public ModelAndView deleteGroup(@PathVariable int id) {
-//        infoMessage = studentDAO.removeStudent(id);
-        ModelAndView modelAndView = new ModelAndView("redirect:/viewAllGroups");
-        return modelAndView;
+        infoMessageGroup = groupDAO.removeGroup(id);
+        return new ModelAndView("redirect:/viewAllGroups");
     }
 
-    @RequestMapping(value = "/editGroup/editSave", method = RequestMethod.POST)
-    public ModelAndView editSave(@ModelAttribute Group group) {
-        groupDAO.saveGroup(group);
-        return new ModelAndView("redirect:/viewAllGroupss");
+    @RequestMapping(value = "/editGroup/editSaveGroup", method = RequestMethod.POST)
+    public ModelAndView editSaveGroup(@ModelAttribute Group group) {
+        group.setId(idForEdit);
+        infoMessageGroup = groupDAO.saveGroup(group);
+        return new ModelAndView("redirect:/viewAllGroups");
     }
 
     @RequestMapping(value = "/editGroup/{id}", method = RequestMethod.GET)
     public ModelAndView editGroup(@PathVariable int id) {
-        return new ModelAndView("editGroup", "command", findGroupInList(groupList, id));
+        idForEdit = id;
+        ModelAndView modelAndView = new ModelAndView("editGroup");
+        modelAndView.addObject("command",findGroupInList(groupList, id));
+        HashMap< Integer, String> awailableFaculty = new HashMap<>();
+        for (Faculty temp: groupDAO.getAwailFaculty()) {
+            awailableFaculty.put(temp.getId(), temp.getName());
+        }
+        modelAndView.addObject("name1",awailableFaculty);
+        return modelAndView;
     }
 
     public Group findGroupInList(List<Group> groupList, int id) {
@@ -93,6 +92,11 @@ public class GroupController {
             if (temp.getId() == id) {group = temp;}
         }
         return group;
+    }
+
+    @RequestMapping(value = "/getGroupStudents", method = RequestMethod.GET)
+    public ModelAndView getGroupStudents() {
+        return new ModelAndView("getGroupStudents");
     }
 
 }

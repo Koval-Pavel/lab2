@@ -1,17 +1,18 @@
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html>
 <head>
-    <title>Add new Group:</title>
+    <title>Edit Group:</title>
 </head>
 <body>
-<h2>Add new Group</h2>
-<form:form action="saveGroup" method="post">
+<h2>Edit Group:</h2>
+<form:form action="editSaveGroup" method="post">
     <table>
         <tr>
-            <td>Group Name:</td>
-            <td><form:input path="name"/></td>
+            <td>Name:</td>
+            <td><form:input path="name"  /></td>
         </tr>
         <tr>
             <td>Faculty:</td>
@@ -25,16 +26,17 @@
             </td>
         </tr>
         <tr>
-            <td>Group Head Name:</td>
+            <td>Head name:</td>
             <td><form:input path="headName"/></td>
-            <td>(Input group head name from students table)</td>
+            <td>(Input team-mate name from table)</td>
         </tr>
         <tr>
             <td></td>
-            <td><input type="submit" value="Save"></td>
+            <td><input type="submit" value="Edit Save"></td>
         </tr>
     </table>
 </form:form>
+
 <ul>
     <li><a href="./viewAllStudents">View all students</a></li>
     <li><a href="./viewAllGroups">View all groups</a></li>
