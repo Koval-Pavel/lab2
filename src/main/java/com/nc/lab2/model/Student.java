@@ -12,7 +12,6 @@ public class Student {
     private String TeamMate_Name;
     private String infoMessage;
     private HashMap<String, Double > subjectListWithMark;
-    private int teamLeader;
 
 
 
@@ -20,12 +19,11 @@ public class Student {
         super();
     }
 
-    public Student(int id, String name, int groupId, int groupTeamMateId, int teamLeader) {
+    public Student(int id, String name, int groupId, int groupTeamMateId) {
         this.id = id;
         this.name = name;
         this.groupId = groupId;
         this.groupTeamMateId = groupTeamMateId;
-        this.teamLeader = teamLeader;
     }
 
     public Student(int id, String name,  String groupName, int groupTeamMateId) {
@@ -39,7 +37,7 @@ public class Student {
         this.id = id;
         this.name = name;
         GroupName = groupName;
-        TeamMate_Name = teamMate_Name;
+        this.TeamMate_Name = teamMate_Name;
     }
 
     public Student(int id, String name) {
@@ -47,7 +45,7 @@ public class Student {
         this.name = name;
     }
 
-    public Student(int id, String name, int groupId, int groupTeamMateId, String groupName, String teamMate_Name, String infoMessage, HashMap<String, Double> subjectListWithMark, int teamLeader) {
+    public Student(int id, String name, int groupId, int groupTeamMateId, String groupName, String teamMate_Name, String infoMessage, HashMap<String, Double> subjectListWithMark) {
         this.id = id;
         this.name = name;
         this.groupId = groupId;
@@ -56,16 +54,11 @@ public class Student {
         TeamMate_Name = teamMate_Name;
         this.infoMessage = infoMessage;
         this.subjectListWithMark = subjectListWithMark;
-        this.teamLeader = teamLeader;
     }
 
-    public Student(int id, String name, String groupName, String TeamMate_Name, int teamLeader) {
-        this.id = id;
-        this.name = name;
-        this.TeamMate_Name = TeamMate_Name;
-        GroupName = groupName;
-        this.teamLeader = teamLeader;
-    }
+
+
+
 
     public int getId() {
         return id;
@@ -123,13 +116,7 @@ public class Student {
         this.infoMessage = infoMessage;
     }
 
-    public int getTeamLeader() {
-        return teamLeader;
-    }
 
-    public void setTeamLeader(int teamLeader) {
-        this.teamLeader = teamLeader;
-    }
 
     @Override
     public boolean equals(Object o) {

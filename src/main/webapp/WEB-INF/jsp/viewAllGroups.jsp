@@ -44,6 +44,7 @@
     </security:authorize>
     <security:csrfInput/>
     <ul>
+        <li><a href="./viewAllFacultys">View all facultys</a></li>
         <li><a href="./viewAllStudents">View all students</a></li>
         <li><a href="./findStudent">Find Student</a></li>
         <li><a href="./logout">LogOut</a></li>
