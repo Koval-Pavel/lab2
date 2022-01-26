@@ -34,9 +34,13 @@ public class FacultyController {
 
     @RequestMapping(value = "/viewAllFacultys", method = RequestMethod.GET)
     public ModelAndView viewAllGroups() {
-        facultyList = facultyDAO.getAllFaculty();
         log.info("Log inside method View Faculty (Test)");
-        return new ModelAndView("facultysView/viewAllFacultys", "list", facultyList);
+        facultyList = facultyDAO.getAllFaculty();
+        ModelAndView modelAndView = new ModelAndView("facultysView/viewAllFacultys");
+        modelAndView.addObject("massage",infoMessageFaculty);
+        infoMessageFaculty = null;
+        modelAndView.addObject("list",facultyList);
+        return modelAndView;
     }
 
     @PreAuthorize("hasRole('ADMIN')")

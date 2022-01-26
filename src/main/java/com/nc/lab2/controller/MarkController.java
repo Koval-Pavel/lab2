@@ -1,24 +1,20 @@
 package com.nc.lab2.controller;
 
 
-import com.nc.lab2.dao.GroupDAO;
 import com.nc.lab2.dao.MarkDAO;
-import com.nc.lab2.model.Faculty;
-import com.nc.lab2.model.Group;
 import com.nc.lab2.model.Mark;
-import com.nc.lab2.model.Student;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -33,6 +29,15 @@ public class MarkController {
 
     @Autowired
     private MarkDAO markDAO;
+
+
+    @RequestMapping(value = "/studentMarkInfo/{id}", method = RequestMethod.GET)
+    public ModelAndView studentInfo(@PathVariable int id) {
+
+        return new ModelAndView("marksView/studentInfo");
+
+    }
+
 
 
 //    ------------------------------------------------- Не реализованные методы

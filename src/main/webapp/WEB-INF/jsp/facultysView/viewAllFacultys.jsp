@@ -9,6 +9,12 @@
     <title>All Facultys:</title>
 </head>
 <body>
+
+<h1>INFO MESSAGE: </h1>
+<jsp:text>
+    ${massage}
+</jsp:text>
+
 <h2>All Facultys:</h2>
 <table border="2" cellpadding="2" width="60%">
     <tr>

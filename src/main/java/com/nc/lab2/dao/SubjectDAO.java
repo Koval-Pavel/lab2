@@ -39,8 +39,9 @@ public class SubjectDAO extends JdbcDaoSupport {
 
     public void addSubject (Subject subject) {
         String sqlUpdate;
-            sqlUpdate = "INSERT INTO SUBJECTS (SUB_NAME, SUB_TEACHER_NAME) VALUES (?, ?)";
-        this.getJdbcTemplate().update(sqlUpdate, subject.getName(), subject.getTeacherName());
+        sqlUpdate = "INSERT INTO SUBJECTS (SUB_NAME, SUB_TEACHER_NAME) VALUES (?, ?)";
+        Object[] params = new Object[] {subject.getName(), subject.getTeacherName()};
+        this.getJdbcTemplate().update(sqlUpdate, params);
     }
 
     public String removeSubject(int id) {
@@ -55,7 +56,8 @@ public class SubjectDAO extends JdbcDaoSupport {
         String infoMessage = null;
         String sqlUpdate;
             sqlUpdate = "UPDATE SUBJECTS set SUB_NAME = ?, SUB_TEACHER_NAME = ? where SUB_ID = ?" ;
-                this.getJdbcTemplate().update(sqlUpdate, subject.getName(), subject.getTeacherName(), subject.getId());
+            Object[] params = new Object[] {subject.getName(), subject.getTeacherName(), subject.getId()};
+                this.getJdbcTemplate().update(sqlUpdate, params);
         return infoMessage;
     }
 

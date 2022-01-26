@@ -5,13 +5,13 @@ public class Mark {
     private int id;
     private int StudentId;
     private int SubjectId;
-    private double mark;
+    private double value;
 
-    public Mark(int id, int studentId, int subjectId, double mark) {
+    public Mark(int id, int studentId, int subjectId, double value) {
         this.id = id;
         StudentId = studentId;
         SubjectId = subjectId;
-        this.mark = mark;
+        this.value = value;
     }
 
     public int getId() {
@@ -38,11 +38,11 @@ public class Mark {
         SubjectId = subjectId;
     }
 
-    public double getMark() {
-        return mark;
+    public double getValue() {
+        return value;
     }
 
-    public void setMark(double mark) {
-        this.mark = mark;
+    public void setValue(double value) {
+        this.value = value;
     }
 }

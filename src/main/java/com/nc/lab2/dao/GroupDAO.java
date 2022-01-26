@@ -49,30 +49,32 @@ public class GroupDAO extends JdbcDaoSupport {
     public String addGroup (Group group) {
         String infoMessage = null;
         String sqlUpdate;
+        Object[] params;
         List<Student> GroupHead;
         if (!group.getHeadName().equals("")) {
-            sqlUpdate = "SELECT * FROM STUDENTS WHERE ST_NAME = '" + group.getHeadName() + "'";
-            Object[] params = new Object[]{};
+            sqlUpdate = "SELECT * FROM STUDENTS WHERE ST_NAME = ?";
+            params = new Object[]{group.getHeadName()};
             StudentMapper mapper = new StudentMapper();
-            GroupHead = this.getJdbcTemplate().query(sqlUpdate, params, mapper);
+            GroupHead = this.getJdbcTemplate().query(sqlUpdate, params , mapper);
             if (GroupHead.isEmpty()) {
                 infoMessage = "No Students with this name";
             } else {
-                sqlUpdate =  "INSERT INTO ST_GROUP (GR_NAME, GR_FAC_ID, GR_HEAD_ID) VALUES " +
-                        "('" + group.getName() + "', " + group.getFacultyId() + ", " + GroupHead.get(0).getId() + ")";
-                this.getJdbcTemplate().update(sqlUpdate);
+                sqlUpdate =  "INSERT INTO ST_GROUP (GR_NAME, GR_FAC_ID, GR_HEAD_ID) VALUES (?,?,?)";
+                this.getJdbcTemplate().update(sqlUpdate, group.getName(), group.getFacultyId(), GroupHead.get(0).getId() );
             }
         } else {
             if (group.getFacultyId() == 0) {
-                sqlUpdate = "INSERT INTO ST_GROUP ( GR_NAME, GR_FAC_ID, GR_HEAD_ID) VALUES " +
-                        "('" + group.getName() + "', " + null + ", " + null + ")";
+                sqlUpdate = "INSERT INTO ST_GROUP ( GR_NAME, GR_FAC_ID, GR_HEAD_ID) VALUES (?,?,?)";
+                params = new Object[]{group.getName(),null,null};
+
             } else {
 
-                sqlUpdate = "INSERT INTO ST_GROUP (GR_NAME, GR_FAC_ID, GR_HEAD_ID) VALUES " +
-                        "('" + group.getName() + "', " + group.getFacultyId() + ", " + null + ")"; // Временно добавляю нулл а вообще group.getHeadId()
+                sqlUpdate = "INSERT INTO ST_GROUP (GR_NAME, GR_FAC_ID, GR_HEAD_ID) VALUES (?,?,?)";
+                params = new Object[]{group.getName(),group.getFacultyId(),null};
+
             }
 
-            this.getJdbcTemplate().update(sqlUpdate);
+            this.getJdbcTemplate().update(sqlUpdate,params);
         }
         return infoMessage;
     }
@@ -109,29 +111,31 @@ public class GroupDAO extends JdbcDaoSupport {
     public String saveGroup(Group group) {
         String infoMessage = null;
         String sqlUpdate;
+        Object[] params;
+
         List<Student> GroupHead;
         if (!group.getHeadName().equals("")) {
-            sqlUpdate = "SELECT * FROM STUDENTS WHERE ST_NAME = '" + group.getHeadName() + "'";
-            Object[] params = new Object[]{};
+            sqlUpdate = "SELECT * FROM STUDENTS WHERE ST_NAME = ?";
+            params = new Object[]{group.getHeadName()};
             StudentMapper mapper = new StudentMapper();
             GroupHead = this.getJdbcTemplate().query(sqlUpdate, params, mapper);
             if (GroupHead.isEmpty()) {
                 infoMessage = "No Students with this name";
             } else {
                 sqlUpdate = "UPDATE ST_GROUP set GR_NAME = ?, GR_FAC_ID = ?, GR_HEAD_ID = ? WHERE GR_ID = ?";
-                this.getJdbcTemplate().update(sqlUpdate, group.getName(),
-                        group.getFacultyId() == 0? null : group.getFacultyId(), GroupHead.get(0).getId(), group.getId());
+                params = new Object[]{group.getName(), group.getFacultyId() == 0? null : group.getFacultyId(),
+                        GroupHead.get(0).getId(), group.getId()};
+                this.getJdbcTemplate().update(sqlUpdate, params);
             }
         } else {
-            // подкорректировать, можно не добавлять head_ИД
             sqlUpdate = "UPDATE ST_GROUP set GR_NAME = ?, GR_FAC_ID = ?, GR_HEAD_ID = ? where GR_ID = ?" ;
             if (group.getFacultyId() == 0) {
-                this.getJdbcTemplate().update(sqlUpdate, group.getName(),
-                        null, group.getHeadId() == 0? null : group.getHeadId(), group.getId());
+                params = new Object[]{group.getName(), null, group.getHeadId() == 0? null : group.getHeadId(), group.getId()};
             } else {
-                this.getJdbcTemplate().update(sqlUpdate, group.getName(), group.getFacultyId(),
-                        group.getHeadId() == 0? null : group.getHeadId(), group.getId());
+                params = new Object[]{group.getName(), group.getFacultyId(),
+                        group.getHeadId() == 0? null : group.getHeadId(), group.getId()};
             }
+            this.getJdbcTemplate().update(sqlUpdate, params);
         }
         return infoMessage;
     }

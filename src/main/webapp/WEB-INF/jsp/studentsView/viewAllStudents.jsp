@@ -26,11 +26,10 @@
             <security:csrfInput/>
 
         </tr>
-
         <c:forEach var="student" items="${list}">
-
             <tr>
-                <td><a href="studentInfo/${student.id}">${student.name}</a> </td>
+                <td>${student.name}</td>
+<%--                <td><a href="studentMarkInfo/${student.id}">${student.name}</a> </td>--%>
                 <td>${student.groupName}</td>
                 <td>${student.teamMate_Name}</td>
                 <security:authorize access="hasRole('ADMIN')">
@@ -38,7 +37,6 @@
                     <td><a href="deleteStudent/${student.id}">Delete</a> </td>
                 </security:authorize>
                 <security:csrfInput/>
-
             </tr>
         </c:forEach>
     </table>

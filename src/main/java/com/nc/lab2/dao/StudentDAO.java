@@ -53,10 +53,9 @@ public class StudentDAO extends JdbcDaoSupport {
         return studentList;
     }
 
-//    На даннsй моммент реализован только поиск по имени
     public List<Student> findStudentAccount(String name) {
         List<Student> studentList;
-        String sql = "SELECT ST_ID, ST_NAME, ST_GR_ID, ST_TEAMMATE_ID FROM STUDENTS" + " where ST_NAME = ? ";
+        String sql = "SELECT ST_ID, ST_NAME, ST_GR_ID, ST_TEAMMATE_ID FROM STUDENTS where ST_NAME = ? ";
         Object[] params = new Object[] { name };
         StudentMapper mapper = new StudentMapper();
         try {
@@ -70,28 +69,31 @@ public class StudentDAO extends JdbcDaoSupport {
     public String saveStudent(Student student) {
         String infoMessage = null;
         List<Student> TeamMate;
+        Object[] params;
         if (!student.getTeamMate_Name().equals("")) {
-            String sqlUpdate = "SELECT * FROM STUDENTS WHERE ST_NAME = '" + student.getTeamMate_Name() + "'";
-            Object[] params = new Object[]{};
+            String sqlUpdate = "SELECT * FROM STUDENTS WHERE ST_NAME = ?";
+            params = new Object[]{student.getTeamMate_Name()};
             StudentMapper mapper = new StudentMapper();
             TeamMate = this.getJdbcTemplate().query(sqlUpdate, params, mapper);
             if (TeamMate.isEmpty()) {
                 infoMessage = "No Students with this name";
             } else {
                 sqlUpdate = "UPDATE STUDENTS set ST_NAME = ?, ST_GR_ID = ?, ST_TEAMMATE_ID = ? WHERE ST_ID = ?";
-                this.getJdbcTemplate().update(sqlUpdate, student.getName(),
-                        student.getGroupId() == 0? null:student.getGroupId(),  TeamMate.get(0).getId(), student.getId());
+                params = new Object[]{student.getName(),
+                        student.getGroupId() == 0? null:student.getGroupId(),  TeamMate.get(0).getId(), student.getId()};
+
+                this.getJdbcTemplate().update(sqlUpdate, params);
             }
         } else {
-            // подкорректировать, можно не добавлять тиммате_ИД
             String sqlUpdate = "UPDATE STUDENTS set ST_NAME = ?, ST_GR_ID = ?, ST_TEAMMATE_ID = ? where ST_ID = ?" ;
             if (student.getGroupId() == 0) {
-                this.getJdbcTemplate().update(sqlUpdate, student.getName(),
-                        null, student.getGroupTeamMateId() == 0?  null: student.getGroupTeamMateId(), student.getId());
+                params = new Object[] {student.getName(),
+                        null, student.getGroupTeamMateId() == 0?  null: student.getGroupTeamMateId(), student.getId()};
             } else {
-                this.getJdbcTemplate().update(sqlUpdate, student.getName(), student.getGroupId(),
-                        student.getGroupTeamMateId() ==0?null: student.getGroupTeamMateId(), student.getId());
+                params = new Object[] {student.getName(), student.getGroupId(),
+                        student.getGroupTeamMateId() ==0?null: student.getGroupTeamMateId(), student.getId()};
             }
+            this.getJdbcTemplate().update(sqlUpdate, params);
         }
         return infoMessage;
     }
@@ -116,30 +118,30 @@ public class StudentDAO extends JdbcDaoSupport {
     public String addStudent(Student student) {
         String infoMessage = null;
         List<Student> TeamMate;
+        Object[] params;
         if (!student.getTeamMate_Name().equals("")) {
-            String sqlUpdate = "SELECT * FROM STUDENTS WHERE ST_NAME = '" + student.getTeamMate_Name() + "'";
-            Object[] params = new Object[]{};
+            String sqlUpdate = "SELECT * FROM STUDENTS WHERE ST_NAME = ?";
+            params = new Object[]{student.getTeamMate_Name()};
             StudentMapper mapper = new StudentMapper();
             TeamMate = this.getJdbcTemplate().query(sqlUpdate, params, mapper);
             if (TeamMate.isEmpty()) {
                 infoMessage = "No Students with this name";
             } else {
-                sqlUpdate = "INSERT INTO STUDENTS (ST_NAME, ST_GR_ID, ST_TEAMMATE_ID) VALUES " +
-                        "('" + student.getName() + "', " + student.getGroupId() + ", "  + TeamMate.get(0).getId() + ")";
-                this.getJdbcTemplate().update(sqlUpdate);
+                sqlUpdate = "INSERT INTO STUDENTS (ST_NAME, ST_GR_ID, ST_TEAMMATE_ID) VALUES (?,?,?)";
+                params = new Object[]{student.getName(), student.getGroupId(), TeamMate.get(0).getId()};
+                this.getJdbcTemplate().update(sqlUpdate, params );
             }
         } else {
 
-            // подкорректировать, можно не добавлять тиммате_ИД
             String sqlUpdate;
             if (student.getGroupId() == 0) {
-                sqlUpdate = "INSERT INTO STUDENTS ( ST_NAME, ST_GR_ID,  ST_TEAMMATE_ID) VALUES " +
-                        "('" + student.getName() + "', " + null + ", " + student.getGroupTeamMateId() + ")";
+                sqlUpdate = "INSERT INTO STUDENTS ( ST_NAME, ST_GR_ID,  ST_TEAMMATE_ID) VALUES  (?,?,?)";
+                params = new Object[]{student.getName(), null, student.getGroupTeamMateId()};
             } else {
-                sqlUpdate = "INSERT INTO STUDENTS (ST_NAME, ST_GR_ID,  ST_TEAMMATE_ID) VALUES " +
-                        "('" + student.getName() + "', " + student.getGroupId() + ", "  + student.getGroupTeamMateId() + ")";
+                sqlUpdate = "INSERT INTO STUDENTS (ST_NAME, ST_GR_ID,  ST_TEAMMATE_ID) VALUES (?,?,?)";
+                params = new Object[]{student.getName(), student.getGroupId(), student.getGroupTeamMateId()};
             }
-            this.getJdbcTemplate().update(sqlUpdate);
+            this.getJdbcTemplate().update(sqlUpdate,params);
         }
         return infoMessage;
     }

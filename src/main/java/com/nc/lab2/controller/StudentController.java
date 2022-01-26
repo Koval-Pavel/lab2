@@ -112,10 +112,8 @@ public class StudentController {
 
 //    ------------------------------------------------- Не реализованные методы
 
-    @RequestMapping(value = "/studentInfo/{id}", method = RequestMethod.GET)
-    public ModelAndView studentInfo(@PathVariable int id) {
-        return new ModelAndView("studentsView/studentInfo");
-    }
+
+
 
 
 }

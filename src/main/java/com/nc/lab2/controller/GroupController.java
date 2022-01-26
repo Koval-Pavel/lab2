@@ -99,7 +99,7 @@ public class GroupController {
     }
 
 
-//    ---------------------------------------------------
+//    --------------------------------------------------- не реализован
     @RequestMapping(value = "/getGroupStudents", method = RequestMethod.GET)
     public ModelAndView getGroupStudents() {
         return new ModelAndView("groupsView/getGroupStudents");

@@ -2,7 +2,9 @@ package com.nc.lab2.dao;
 
 
 import com.nc.lab2.mapper.FacultyMapper;
+import com.nc.lab2.mapper.GroupMapper;
 import com.nc.lab2.model.Faculty;
+import com.nc.lab2.model.Group;
 import com.nc.lab2.model.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
@@ -37,10 +39,19 @@ public class FacultyDAO extends JdbcDaoSupport {
     }
 
     public String removeFaculty(int id) {
+        List<Group> groupList; // Group
         String infoMessage;
-        String sqlUpdate2 = " DELETE FROM FacultyS WHERE FAC_ID = ?" ;
-        this.getJdbcTemplate().update(sqlUpdate2,  id);
-        infoMessage = "Deleted";
+        String sqlUpdate = " SELECT * FROM ST_GROUP WHERE GR_FAC_ID = ?";
+        Object[] params = new Object[] { id };
+        GroupMapper mapper = new GroupMapper();
+        groupList = this.getJdbcTemplate().query(sqlUpdate, params,  mapper);
+        if (groupList.isEmpty()) {
+            String sqlUpdate1 =  "DELETE FROM FacultyS WHERE FAC_ID = ?" ;
+            this.getJdbcTemplate().update(sqlUpdate1,  params);
+            infoMessage = "Deleted";
+        } else {
+            infoMessage = "Faculty is Main for some Group, change group faculty for other";
+        }
         return infoMessage;
     }
 
