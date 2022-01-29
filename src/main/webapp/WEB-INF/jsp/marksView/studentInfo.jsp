@@ -5,73 +5,60 @@
 
 <html>
 <head>
-    <title>Student INFO:</title>
+    <title>Student INFO: </title>
 </head>
 <body>
 
-<h2>INFO MESSAGE: </h2>
-<%--dobavit' NAME i td.--%>
-<jsp:text>
-    ${massage}
-</jsp:text>
-
+<h3>INFO MESSAGE: ${massage} </h3>
 <h2>Subjects:</h2>
-<%-- forma this is on which page we send data from form (path = getter of var) in OBJECT--%>
-<form:form action="addStudentMark" method="post">
-<table border="1" cellpadding="1" width="60%">
+<form:form action="checkStudentMark/${studentId}" method="post">
+    <table border="1" cellpadding="1" width="60%">
+
     <tr>
-        <th>Subject Name</th>
+        <th>Choose Subject Name</th>
         <td>
             <select name="subjectId" id="subjectId">
-                <option value="0" selected="all"></option>
-                <c:forEach var="subjectId" items="${name1}">
+                <c:forEach var="subjectId" items="${awailableSub}">
                     <option value="${subjectId.key}">${subjectId.value}</option>
                 </c:forEach>
             </select>
         </td>
+
+        <td><input type="submit" value="Check"></td>
+        <td><a  href="addMark/${studentId}/">Add mark</a></td>
     </tr>
-    <tr>
-        <th>"date"</th>
-        <th>Mark</th>
-    </tr>
-    <c:forEach var="marks" items="${list}">
+
 
         <tr>
-            <td>"DAte</td>
-                <%--        here will be a MARK--%>
-            <td>${marks.name}</td>
-            <security:authorize access="hasRole('ADMIN')">
-                <td><a href="editStudent/${student.id}">Edit</a> </td>
-                <td><a href="deleteStudent/${student.id}">Delete</a> </td>
-            </security:authorize>
-            <security:csrfInput/>
-
+            <td>Name:</td>
+            <td>Date:</td>
+            <td>Value:</td>
         </tr>
-    </c:forEach>
-    <tr>
-<%--        Here will be "date" input form for mark object--%>
-        <td><form:input path="date"  /></td>
-        <td><form:input path="value"  /></td>
-    </tr>
 
+        <c:forEach var="mark" items="${marklist}">
+            <tr>
+                <td>${mark.subjectName}</td>
+                <td>${mark.date}</td>
+                <td>${mark.value}</td>
+                <security:authorize access="hasRole('ADMIN')">
+                    <td><a href="deleteMark/${mark.id}">Delete</a> </td>
+                </security:authorize>
+                <security:csrfInput/>
+            </tr>
+        </c:forEach>
 
-</table>
+        <tr>
+        </tr>
+
+    </table>
 </form:form>
-<tr>
-    <td></td>
-    <td><input type="submit" value="Check"></td>
-</tr>
-
-<%--<security:authorize access="hasRole('ADMIN')">--%>
-<%--    <div><td><a href="addStudent">Add new Student Button</a> </td></div>--%>
-<%--</security:authorize>--%>
-<%--<security:csrfInput/>--%>
 <ul>
     <li><a href="../viewAllFacultys">View all facultys</a></li>
     <li><a href="../viewAllGroups">View all groups</a></li>
+    <li><a href="../viewAllStudents">View all students</a></li>
+    <li><a href="../viewAllSubjects">View all subject</a></li>
     <li><a href="../findStudent">Find Student</a></li>
-    <li><a href="../logout">LogOut</a></li>
-
+    <li><a href="../logout">Logout</a></li>
 </ul>
 </body>
 </html>

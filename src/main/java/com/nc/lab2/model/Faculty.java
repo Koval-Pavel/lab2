@@ -2,16 +2,40 @@ package com.nc.lab2.model;
 
 import java.util.Objects;
 
+/**
+ * Class that describe Faculty entity.
+ */
 public class Faculty {
 
+    /** Unique id of Faculty*/
     private int id;
+
+    /** Name of Faculty*/
     private String name;
+
+    /** Head Name of each Faculty*/
     private String HeadName;
 
     public Faculty() {
         super();
     }
 
+    /**
+     * Constructor - creation of new Faculty Object with param's.
+     * @param id - unique id of Faculty
+     * @param name - Name of Faculty.
+     */
+    public Faculty(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    /**
+     * Constructor - creation of new Faculty Object with param's.
+     * @param id - unique id of Faculty
+     * @param name - Name of Faculty.
+     * @param headName - Name of the Person who is group head
+     */
     public Faculty(int id, String name, String headName) {
         this.id = id;
         this.name = name;
@@ -64,8 +88,5 @@ public class Faculty {
                 '}';
     }
 
-    public Faculty(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+
 }

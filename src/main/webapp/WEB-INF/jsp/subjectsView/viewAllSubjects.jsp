@@ -8,11 +8,7 @@
 </head>
 <body>
 
-<h1>INFO MESSAGE: </h1>
-<jsp:text>
-    ${infoMessageGroup}
-</jsp:text>
-
+<h3>INFO MESSAGE: ${infoMessageSubject}</h3>
 <h2>All Subjects:</h2>
 <table border="2" cellpadding="2" width="60%">
     <tr>

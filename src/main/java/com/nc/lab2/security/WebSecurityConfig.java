@@ -10,12 +10,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+
+/**
+ * Class that response for Security access in application
+ */
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-
-
+    /**
+     * Method which specify users roles.
+     */
     @Bean
     public UserDetailsService userDetailsService() {
         User.UserBuilder users =  User.withDefaultPasswordEncoder();
@@ -25,6 +30,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return manager;
     }
 
+    /**
+     *  Method that configure access for pages
+     * @param http request.
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
@@ -33,10 +42,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/viewAllGroups").authenticated()
                 .antMatchers("/viewAllFacultys").authenticated()
                 .antMatchers("/viewAllSubject").authenticated()
+                .antMatchers("/studentMarkInfo/{id}").authenticated()
                 .antMatchers("/addStudent").hasRole("ADMIN")
                 .antMatchers("/addFaculty").hasRole("ADMIN")
                 .antMatchers("/addGroup").hasRole("ADMIN")
-                .antMatchers("/addGroup").hasRole("ADMIN")
+                .antMatchers("/studentMarkInfo/addMark/{studentId}").hasRole("ADMIN")
+                .antMatchers("/studentMarkInfo/deleteMark/{id}").hasRole("ADMIN")
                 .and()
                 .formLogin()
                 .and()

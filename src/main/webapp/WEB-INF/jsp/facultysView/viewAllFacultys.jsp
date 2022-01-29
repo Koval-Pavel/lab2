@@ -10,11 +10,7 @@
 </head>
 <body>
 
-<h1>INFO MESSAGE: </h1>
-<jsp:text>
-    ${massage}
-</jsp:text>
-
+<h3>INFO MESSAGE: ${massage}</h3>
 <h2>All Facultys:</h2>
 <table border="2" cellpadding="2" width="60%">
     <tr>
@@ -27,7 +23,6 @@
         <security:csrfInput/>
     </tr>
 
-    <%--        list передаем из studentControllera--%>
     <g:forEach var="faculty" items="${list}">
         <tr>
             <td>${faculty.name}</td>
@@ -49,7 +44,7 @@
     <li><a href="./viewAllStudents">View all students</a></li>
     <li><a href="./viewAllSubjects">View all subject</a></li>
     <li><a href="./findStudent">Find Student</a></li>
-    <li><a href="./logout">Find Student</a></li>
+    <li><a href="./logout">Logout</a></li>
 </ul>
 </body>
 </html>

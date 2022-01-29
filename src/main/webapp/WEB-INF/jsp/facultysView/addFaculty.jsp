@@ -24,8 +24,10 @@
     </table>
 </form:form>
 <ul>
-    <li><a href="./viewAllStudents">View all students</a></li>
+    <li><a href="./viewAllFacultys">View all facultys</a></li>
     <li><a href="./viewAllGroups">View all groups</a></li>
+    <li><a href="./viewAllStudents">View all students</a></li>
+    <li><a href="./viewAllSubjects">View all subjects</a></li>
     <li><a href="./findStudent">Find Student</a></li>
 
 </ul>

@@ -2,14 +2,37 @@ package com.nc.lab2.model;
 
 public class Subject {
 
+    /** Unique id of the Subject*/
     private int id;
+
+    /** name of the Subject */
     private String name;
+
+    /** name of the Teacher Name */
     private String TeacherName;
 
     public Subject() {
         super();
     }
 
+
+    /**
+     * Constructor - creation of new Subject Object with param's.
+     * @param id - Unique id of the Subject
+     * @param name - name of the Subject
+     */
+    public Subject(int id, String name)
+    {
+        this.id = id;
+        this.name = name;
+    }
+
+    /**
+     * Constructor - creation of new Subject Object with param's.
+     * @param id - Unique id of the Subject
+     * @param name - name of the Subject
+     * @param teacherName - name of the Teacher Name
+     */
     public Subject(int id, String name, String teacherName) {
         this.id = id;
         this.name = name;

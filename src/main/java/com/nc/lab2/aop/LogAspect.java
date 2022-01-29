@@ -5,20 +5,16 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
-import static com.nc.lab2.controller.StudentController.log;
-
+import static com.nc.lab2.Lab2Application.log;
 
 @Component
 @Aspect
 public class LogAspect {
 
 
-// Testing for Logging
-    @Before("execution(* com.nc.lab2.controller.StudentController.*())") // Для всех методов класа студентконтрол
+    @Before("execution(* com.nc.lab2.*.*.*())")
     public void logMethod (JoinPoint joinPoint) {
-        System.out.println("Details:" + joinPoint.getSignature().getName());
-        log.info("Method " + joinPoint.getSignature().getName() + " started");
-        System.out.println("****************************************************");
+        log.info("LOG.INFO FROM LOG ASPECT Method " + joinPoint.getSignature().getName() + " started");
     }
 
 }

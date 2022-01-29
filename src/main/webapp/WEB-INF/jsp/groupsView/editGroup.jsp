@@ -19,7 +19,7 @@
             <td>
                 <select name="facultyId" id="facultyId">
                     <option value="0" selected="selected"></option>
-                    <c:forEach var="facultyId" items="${name1}">
+                    <c:forEach var="facultyId" items="${awailableFaculty}">
                         <option value="${facultyId.key}">${facultyId.value}</option>
                     </c:forEach>
                 </select>
@@ -38,10 +38,11 @@
 </form:form>
 
 <ul>
-    <li><a href="./viewAllStudents">View all students</a></li>
+    <li><a href="./viewAllFacultys">View all facultys</a></li>
     <li><a href="./viewAllGroups">View all groups</a></li>
+    <li><a href="./viewAllSubjects">View all subject</a></li>
     <li><a href="./findStudent">Find Student</a></li>
-
+    <li><a href="./logout">Logout</a></li>
 </ul>
 </body>
 </html>

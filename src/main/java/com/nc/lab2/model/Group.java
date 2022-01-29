@@ -2,17 +2,40 @@ package com.nc.lab2.model;
 
 import java.util.Objects;
 
+/**
+ * Class that describe Group entity.
+ */
 public class Group {
+
+    /** Unique id of Group*/
     private int id;
+
+    /** Name of Group*/
     private String name;
+
+
+    /** id of the faculty to which the group belongs*/
     private int FacultyId;
+
+    /** id of the Student who is group head*/
     private int headId;
+
+    /** Name of the Student who is group head*/
     private String HeadName;
+
+    /** Name of the faculty to which the group belongs*/
     private String FacultyName;
 
 
     public Group() {super();}
 
+    /**
+     * Constructor - creation of new Group Object with param's.
+     * @param id - unique id of the Group
+     * @param name - name of the Group
+     * @param facultyId - id of the faculty to which the group belongs
+     * @param headId - id of the Student who is group head
+     */
     public Group(int id, String name, int facultyId, int headId) {
         this.id = id;
         this.name = name;
@@ -20,6 +43,13 @@ public class Group {
         this.headId = headId;
     }
 
+    /**
+     * Constructor - creation of new Group Object with param's.
+     * @param id - unique id of the Group
+     * @param name - name of the Group
+     * @param facultyName - Name of the faculty to which the group belongs
+     * @param headName - Name of the Student who is group head
+     */
     public Group(int id, String name, String facultyName, String headName) {
         this.id = id;
         this.name = name;
@@ -27,37 +57,14 @@ public class Group {
         FacultyName = facultyName;
     }
 
-    public Group(int id, String name,  int facultyId) {
-        this.id = id;
-        this.name = name;
-        this.FacultyId = facultyId;
-    }
-
+    /**
+     * Constructor - creation of new Group Object with param's.
+     * @param id - unique id of the Group
+     * @param name - name of the Group
+     */
     public Group(int id, String name) {
         this.id = id;
         this.name = name;
-    }
-
-    public Group(int id, String name, int facultyId, String headName) {
-        this.id = id;
-        this.name = name;
-        FacultyId = facultyId;
-        HeadName = headName;
-    }
-
-    public Group(int id, String name, String headName) {
-        this.id = id;
-        this.name = name;
-        HeadName = headName;
-    }
-
-    public Group(int id, String name, int facultyId, int headId, String headName, String facultyName) {
-        this.id = id;
-        this.name = name;
-        FacultyId = facultyId;
-        this.headId = headId;
-        HeadName = headName;
-        FacultyName = facultyName;
     }
 
     public int getId() {

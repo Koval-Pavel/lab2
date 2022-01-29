@@ -18,13 +18,11 @@
             <th>Edit</th>
             <th>Delete</th>
         </tr>
-<%--        list передаем из studentControllera--%>
         <c:forEach var="student" items="${getList}">
             <tr>
                 <td>${student.id}</td>
                 <td>${student.name}</td>
                 <td>${student.group}</td>
-<%--                <td>${student.age}</td>--%>
                 <td><a href="editStudent/${student.id}">Edit</a> </td>
                 <td><a href="deleteStudent/${student.id}">Delete</a> </td>
             </tr>
