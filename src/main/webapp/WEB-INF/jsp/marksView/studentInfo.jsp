@@ -10,7 +10,7 @@
 <body>
 
 <h3>INFO MESSAGE: ${massage} </h3>
-<h2>Subjects:</h2>
+<h2>Student Info:</h2>
 <form:form action="checkStudentMark/${studentId}" method="post">
     <table border="1" cellpadding="1" width="60%">
 
@@ -53,7 +53,7 @@
     </table>
 </form:form>
 <ul>
-    <li><a href="../viewAllFacultys">View all facultys</a></li>
+    <li><a href="../viewAllFacultys">View all faculty's</a></li>
     <li><a href="../viewAllGroups">View all groups</a></li>
     <li><a href="../viewAllStudents">View all students</a></li>
     <li><a href="../viewAllSubjects">View all subject</a></li>

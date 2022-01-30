@@ -40,6 +40,7 @@
 </security:authorize>
 <security:csrfInput/>
 <ul>
+    <li><a href="./viewAllFacultys">View all faculty's</a></li>
     <li><a href="./viewAllGroups">View all groups</a></li>
     <li><a href="./viewAllStudents">View all students</a></li>
     <li><a href="./viewAllSubjects">View all subject</a></li>
