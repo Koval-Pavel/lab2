@@ -53,7 +53,7 @@ public class GroupController {
     @RequestMapping(value = "/viewAllGroups", method = RequestMethod.GET)
     public ModelAndView viewAllGroups() {
         groupList = groupDAO.getAllGroup();
-        infoMessageGroup = groupList == null? INFO_SQL_ERRO: null;
+        infoMessageGroup = groupList == null? INFO_SQL_ERRO: infoMessageGroup;
         log.info(infoMessageGroup);
         ModelAndView modelAndView = new ModelAndView("groupsView/viewAllGroups");
         modelAndView.addObject("massage",infoMessageGroup);

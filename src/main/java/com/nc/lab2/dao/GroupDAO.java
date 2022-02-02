@@ -47,7 +47,8 @@ public class GroupDAO extends JdbcDaoSupport {
     private final String SQL_SAVE = "UPDATE ST_GROUP set GR_NAME = ?, GR_FAC_ID = ?, GR_HEAD_ID = ? WHERE GR_ID = ?";
 
     /** SQL query for get students list for selected group */
-    private final String SQL_GET_STDNTS = "SELECT * FROM STUDENTS WHERE ST_GR_ID = ?";
+    private final String SQL_GET_STDNTS = "SELECT STD.ST_ID as ST_ID, STD.ST_NAME as ST_NAME, STD.ST_GR_ID as ST_GR_ID, STD.ST_TEAMMATE_ID AS ST_TEAMMATE_ID, STD1.ST_NAME AS ST_TEAMMATE_NAME\n" +
+            "       FROM STUDENTS STD LEFT JOIN STUDENT_LIST.STUDENTS STD1 ON STD.ST_TEAMMATE_ID = STD1.ST_ID WHERE STD.ST_GR_ID = ?";
 
     /** INFO message */
     private final String INFO_NO_STUD = "No Students with this name";
@@ -230,7 +231,24 @@ public class GroupDAO extends JdbcDaoSupport {
         try {
             List<Student> GroupStudentsList;
             Object[] params = new Object[]{id};
-            StudentMapper mapper = new StudentMapper();
+            StudentMapper mapper = new StudentMapper() {
+                @Override
+                public Student mapRow(ResultSet resultSet, int rowNum) {
+                    try {
+                        int student_id = resultSet.getInt("ST_ID");
+                        String student_name = resultSet.getString("ST_NAME");
+                        int student_group_id = resultSet.getInt("ST_GR_ID");
+                        int student_groupTeamMate_id = resultSet.getInt("ST_TEAMMATE_ID");
+                        String student_groupTeamMate_name = resultSet.getString("ST_TEAMMATE_NAME");
+                        return new Student(student_id, student_name, student_group_id, student_groupTeamMate_id,student_groupTeamMate_name);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        log.warn("Some problem with database mapper, custom mapper GroupDao");
+                        return null;
+                    }
+                }
+            };
+//            StudentMapper mapper = new StudentMapper();
             GroupStudentsList = this.getJdbcTemplate().query(SQL_GET_STDNTS, params, mapper);
             return GroupStudentsList;
         } catch (Exception e) {

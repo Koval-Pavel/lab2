@@ -49,7 +49,7 @@ public class SubjectController {
     @RequestMapping(value = "/viewAllSubjects", method = RequestMethod.GET)
     public ModelAndView viewAllSubjects() {
         subjectList = subjectDAO.getAllSubject();
-        infoMessageSubject = subjectList == null? INFO_SQL_ERRO: null;
+        infoMessageSubject = subjectList == null? INFO_SQL_ERRO: infoMessageSubject;
         log.info(infoMessageSubject);
         ModelAndView modelAndView = new ModelAndView("subjectsView/viewAllSubjects");
         modelAndView.addObject("infoMessageSubject",infoMessageSubject);

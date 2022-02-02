@@ -10,7 +10,7 @@
 <form:form action="../saveMark/${studentId}" method="post">
     <table>
         <tr>
-            <td>Mark Date (10-10-2021)</td>
+            <td>Mark Date Example: 2021-10-10</td>
             <td><form:input path="date"/></td>
             <td>Mark Value</td>
             <td>

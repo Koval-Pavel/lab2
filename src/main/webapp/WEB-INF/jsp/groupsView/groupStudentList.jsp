@@ -14,7 +14,7 @@
 <table border="2" cellpadding="2" width="60%">
     <tr>
         <th>Name</th>
-        <th>Group Name</th>
+<%--        <th>Group Name</th>--%>
         <th>GROUP TEAMMATE ID</th>
         <security:authorize access="hasRole('ADMIN')">
             <th>Edit</th>
@@ -26,7 +26,7 @@
     <c:forEach var="groupStudentList" items="${groupStudentList}">
         <tr>
             <td><a href="../studentMarkInfo/${groupStudentList.id}">${groupStudentList.name}</a> </td>
-            <td>${groupStudentList.groupName}</td>
+<%--            <td>${groupStudentList.groupName}</td>--%>
             <td>${groupStudentList.teamMate_Name}</td>
             <security:authorize access="hasRole('ADMIN')">
                 <td><a href="../editStudent/${groupStudentList.id}">Edit</a> </td>

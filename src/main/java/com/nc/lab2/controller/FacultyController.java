@@ -48,7 +48,7 @@ public class FacultyController {
     @RequestMapping(value = "/viewAllFacultys", method = RequestMethod.GET)
     public ModelAndView viewAllGroups() {
         facultyList = facultyDAO.getAllFaculty();
-        infoMessageFaculty = facultyList == null? INFO_SQL_ERRO: null;
+        infoMessageFaculty = facultyList == null? INFO_SQL_ERRO: infoMessageFaculty;
         log.info(infoMessageFaculty);
         ModelAndView modelAndView = new ModelAndView("facultysView/viewAllFacultys");
         modelAndView.addObject("massage",infoMessageFaculty);

@@ -25,7 +25,10 @@
         </td>
 
         <td><input type="submit" value="Check"></td>
+        <security:authorize access="hasRole('ADMIN')">
         <td><a  href="addMark/${studentId}/">Add mark</a></td>
+        </security:authorize>
+        <security:csrfInput/>
     </tr>
 
 

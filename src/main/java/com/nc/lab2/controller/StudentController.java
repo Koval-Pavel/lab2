@@ -54,7 +54,7 @@ public class StudentController {
     @RequestMapping(value = "/viewAllStudents", method = RequestMethod.GET)
     public ModelAndView viewAllStudents() {
         studentList = studentDAO.getAllStudents();
-        infoMessage = studentList == null? INFO_SQL_ERRO: null;
+        infoMessage = studentList == null? INFO_SQL_ERRO: infoMessage;
         log.info(infoMessage);
         ModelAndView modelAndView = new ModelAndView("studentsView/viewAllStudents");
         modelAndView.addObject("massage",infoMessage);

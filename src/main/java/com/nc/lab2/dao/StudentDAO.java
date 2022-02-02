@@ -40,6 +40,9 @@ public class StudentDAO extends JdbcDaoSupport {
     /** SQL query for REMOVE Student */
     private final String SQL_REMOVE = "DELETE FROM STUDENTS WHERE ST_ID = ?";
 
+    /** SQL query for REMOVE Student Mark */
+    private final String SQL_REMOVE_MARK = "DELETE FROM MARKS WHERE MARK_ST_ID = ?";
+
 
     /** SQL query for ADD Student */
     private final String SQL_ADD = "INSERT INTO STUDENTS (ST_NAME, ST_GR_ID, ST_TEAMMATE_ID) VALUES (?,?,?)";
@@ -156,6 +159,7 @@ public class StudentDAO extends JdbcDaoSupport {
             GroupMapper mapper = new GroupMapper();
             studentList = this.getJdbcTemplate().query(SQL_REMOVE_UP, params, mapper);
             if (studentList.isEmpty()) {
+                this.getJdbcTemplate().update(SQL_REMOVE_MARK, id);
                 this.getJdbcTemplate().update(SQL_REMOVE, id);
                 infoMessage = INFO_REMOVE;
             } else {
