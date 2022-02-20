@@ -1,0 +1,29 @@
+version: "3"
+services:
+
+  app-db:
+    image: postgres
+    container_name: app-db
+    environment:
+      - POSTGRES_DB=mydb
+      - POSTGRES_USER=postgres999
+      - POSTGRES_PASSWORD=365983
+    ports:
+      - "5432:5432"
+
+  app3:
+    build: ../lab3_dev
+    container_name: app3
+    image: lab3
+    ports:
+      - "8787:8787"
+
+  app2:
+    build: .
+    container_name: app2
+    ports:
+      - "8989:8080"
+    depends_on:
+      - app-db
+      - app3
+

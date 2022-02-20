@@ -25,16 +25,16 @@ import static com.nc.lab2.Lab2Application.log;
 public class MarkDAO extends JdbcDaoSupport {
 
     /** SQL query for GET_ALL Mark for selected Student */
-    private final String SQL_GET_ALL = "SELECT * FROM MARKS, STUDENTS, SUBJECTS where MARK_ST_ID = STUDENTS.ST_ID and MARK_SUB_ID = SUBJECTS.SUB_ID and MARK_ST_ID = ? and  MARK_SUB_ID = ?";
+    private final String SQL_GET_ALL = "SELECT * FROM STUDENT_LIST.MARKS, STUDENT_LIST.STUDENTS, STUDENT_LIST.SUBJECTS where \"MARK_ST_ID\" = STUDENTS.\"ST_ID\" and \"MARK_SUB_ID\" = SUBJECTS.\"SUB_ID\" and \"MARK_ST_ID\" = ? and  \"MARK_SUB_ID\" = ?";
 
     /** SQL query for check available subjects */
-    private final String SQL_AWAIL_SUB = "SELECT SUB_ID, SUB_NAME FROM SUBJECTS";
+    private final String SQL_AWAIL_SUB = "SELECT \"SUB_ID\", \"SUB_NAME\" FROM STUDENT_LIST.SUBJECTS";
 
     /** SQL query for add mark to subject */
-    private final String SQL_ADD_UP = "INSERT INTO MARKS (MARK_ST_ID, MARK_SUB_ID, MARK_MARK, MARK_DATE) VALUES (?,?,?,?)";
+    private final String SQL_ADD_UP = "INSERT INTO STUDENT_LIST.MARKS (\"MARK_ST_ID\", \"MARK_SUB_ID\", \"MARK_MARK\", \"MARK_DATE\") VALUES (?,?,?,?)";
 
     /** SQL query for REMOVE Mark */
-    private final String SQL_REMOVE = "DELETE FROM MARKS WHERE MARK_ID = ?";
+    private final String SQL_REMOVE = "DELETE FROM STUDENT_LIST.MARKS WHERE \"MARK_ID\" = ?";
 
 
     /** INFO message */

@@ -26,29 +26,29 @@ import static com.nc.lab2.Lab2Application.log;
 public class GroupDAO extends JdbcDaoSupport {
 
     /** SQL query for GET_ALL Groups */
-    private final String SQL_GET_ALL = "SELECT * FROM ST_GROUP LEFT JOIN STUDENTS ON ST_ID = GR_HEAD_ID LEFT JOIN FACULTYS  on FAC_ID = GR_FAC_ID";
+    private final String SQL_GET_ALL = "SELECT * FROM STUDENT_LIST.ST_GROUP LEFT JOIN STUDENT_LIST.STUDENTS ON \"ST_ID\" = \"GR_HEAD_ID\" LEFT JOIN STUDENT_LIST.FACULTYS  on \"FAC_ID\" = \"GR_FAC_ID\"";
 
     /** SQL query for check available group head for ADD Group */
-    private final String SQL_ADD_CHECK_AWAIL = "SELECT * FROM STUDENTS WHERE ST_NAME = ?";
+    private final String SQL_ADD_CHECK_AWAIL = "SELECT * FROM STUDENT_LIST.STUDENTS WHERE \"ST_NAME\" = ?";
 
     /** SQL query for ADD Group */
-    private final String SQL_ADD = "INSERT INTO ST_GROUP ( GR_NAME, GR_FAC_ID, GR_HEAD_ID) VALUES (?,?,?)";
+    private final String SQL_ADD = "INSERT INTO STUDENT_LIST.ST_GROUP ( \"GR_NAME\", \"GR_FAC_ID\", \"GR_HEAD_ID\") VALUES (?,?,?)";
 
     /** SQL query for Get available Faculty */
-    private final String SQL_GET_FAC = "SELECT FAC_ID, FAC_NAME FROM FACULTYS";
+    private final String SQL_GET_FAC = "SELECT \"FAC_ID\", \"FAC_NAME\" FROM STUDENT_LIST.FACULTYS";
 
     /** SQL query for check group have a Head Student*/
-    private final String SQL_REMOVE_UP = " UPDATE STUDENTS set ST_GR_ID = null WHERE ST_GR_ID = ?";
+    private final String SQL_REMOVE_UP = " UPDATE STUDENT_LIST.STUDENTS set \"ST_GR_ID\" = null WHERE \"ST_GR_ID\" = ?";
 
     /** SQL query for REMOVE Group */
-    private final String SQL_REMOVE = "DELETE FROM ST_GROUP WHERE GR_ID = ?";
+    private final String SQL_REMOVE = "DELETE FROM STUDENT_LIST.ST_GROUP WHERE \"GR_ID\" = ?";
 
     /** SQL query for SAVE Group */
-    private final String SQL_SAVE = "UPDATE ST_GROUP set GR_NAME = ?, GR_FAC_ID = ?, GR_HEAD_ID = ? WHERE GR_ID = ?";
+    private final String SQL_SAVE = "UPDATE STUDENT_LIST.ST_GROUP set \"GR_NAME\" = ?, \"GR_FAC_ID\" = ?, \"GR_HEAD_ID\" = ? WHERE \"GR_ID\" = ?";
 
     /** SQL query for get students list for selected group */
-    private final String SQL_GET_STDNTS = "SELECT STD.ST_ID as ST_ID, STD.ST_NAME as ST_NAME, STD.ST_GR_ID as ST_GR_ID, STD.ST_TEAMMATE_ID AS ST_TEAMMATE_ID, STD1.ST_NAME AS ST_TEAMMATE_NAME\n" +
-            "       FROM STUDENTS STD LEFT JOIN STUDENT_LIST.STUDENTS STD1 ON STD.ST_TEAMMATE_ID = STD1.ST_ID WHERE STD.ST_GR_ID = ?";
+    private final String SQL_GET_STDNTS = "SELECT STD.\"ST_ID\" as ST_ID, STD.\"ST_NAME\" as ST_NAME, STD.\"ST_GR_ID\" as ST_GR_ID, STD.\"ST_TEAMMATE_ID\" AS ST_TEAMMATE_ID, STD1.\"ST_NAME\" AS ST_TEAMMATE_NAME\n" +
+            "       FROM STUDENT_LIST.STUDENTS as STD LEFT JOIN STUDENT_LIST.STUDENTS as STD1 ON STD.\"ST_TEAMMATE_ID\" = STD1.\"ST_ID\" WHERE STD.\"ST_GR_ID\" = ?";
 
     /** INFO message */
     private final String INFO_NO_STUD = "No Students with this name";

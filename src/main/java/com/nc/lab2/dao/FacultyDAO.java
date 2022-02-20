@@ -23,19 +23,19 @@ import static com.nc.lab2.Lab2Application.log;
 public class FacultyDAO extends JdbcDaoSupport {
 
     /** SQL query for GET_ALL Faculty */
-    private final String SQL_GET_ALL = "SELECT * FROM FACULTYS";
+    private final String SQL_GET_ALL = "SELECT * FROM STUDENT_LIST.FACULTYS";
 
     /** SQL query for ADD Faculty */
-    private final String SQL_ADD = "INSERT INTO FACULTYS (FAC_NAME, FAC_HEAD_NAME) VALUES (?,?)";
+    private final String SQL_ADD = "INSERT INTO STUDENT_LIST.FACULTYS (\"FAC_NAME\", \"FAC_HEAD_NAME\") VALUES (?,?)";
 
     /** SQL query for get list of groups for Faculty */
-    private final String SQL_REMOVE_UP = "SELECT * FROM ST_GROUP WHERE GR_FAC_ID = ?";
+    private final String SQL_REMOVE_UP = "SELECT * FROM STUDENT_LIST.ST_GROUP WHERE \"GR_FAC_ID\" = ?";
 
     /** SQL query for REMOVE Faculty */
-    private final String SQL_REMOVE = "DELETE FROM FacultyS WHERE FAC_ID = ?";
+    private final String SQL_REMOVE = "DELETE FROM STUDENT_LIST.FACULTYS WHERE \"FAC_ID\" = ?";
 
     /** SQL query for SAVE Faculty */
-    private final String SQL_SAVE = "UPDATE FacultyS set FAC_NAME = ?, FAC_HEAD_NAME = ? where FAC_ID = ?";
+    private final String SQL_SAVE = "UPDATE STUDENT_LIST.FACULTYS set \"FAC_NAME\" = ?, \"FAC_HEAD_NAME\" = ? where \"FAC_ID\" = ?";
 
     /** INFO message */
     private final String INFO_DEL = "Faculty Deleted.";

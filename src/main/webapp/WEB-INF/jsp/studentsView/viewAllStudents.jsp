@@ -45,6 +45,7 @@
         <li><a href="./viewAllSubjects">View all subject</a></li>
         <li><a href="./findStudent">Find Student</a></li>
         <li><a href="./logout">Logout</a></li>
+
     </ul>
 </body>
 </html>

@@ -19,16 +19,16 @@ import static com.nc.lab2.Lab2Application.log;
 public class SubjectDAO extends JdbcDaoSupport {
 
     /** SQL query for GET_ALL Subjects */
-    private final String SQL_GET_ALL = "SELECT * FROM SUBJECTS";
+    private final String SQL_GET_ALL = "SELECT * FROM STUDENT_LIST.SUBJECTS";
 
     /** SQL query for ADD new Subject */
-    private final String SQL_ADD = "INSERT INTO SUBJECTS (SUB_NAME, SUB_TEACHER_NAME) VALUES (?, ?)";
+    private final String SQL_ADD = "INSERT INTO STUDENT_LIST.SUBJECTS (\"SUB_NAME\", \"SUB_TEACHER_NAME\") VALUES (?, ?)";
 
     /** SQL query for REMOVE Subject */
-    private final String SQL_REMOVE = "DELETE FROM SUBJECTS WHERE SUB_ID = ?";
+    private final String SQL_REMOVE = "DELETE FROM STUDENT_LIST.SUBJECTS WHERE \"SUB_ID\" = ?";
 
     /** SQL query for SAVE Group */
-    private final String SQL_SAVE = "UPDATE SUBJECTS set SUB_NAME = ?, SUB_TEACHER_NAME = ? where SUB_ID = ?";
+    private final String SQL_SAVE = "UPDATE STUDENT_LIST.SUBJECTS set \"SUB_NAME\" = ?, \"SUB_TEACHER_NAME\" = ? where \"SUB_ID\" = ?";
 
 
     /** INFO message */

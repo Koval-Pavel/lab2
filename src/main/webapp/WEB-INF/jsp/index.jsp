@@ -14,6 +14,7 @@
     <li><a href="./viewAllSubjects">View all subject</a></li>
     <li><a href="./findStudent">Find Student</a></li>
     <li><a href="./logout">Logout</a></li>
+    <li><a href="./news">News</a></li>
 </ul>
 </body>
 </html>

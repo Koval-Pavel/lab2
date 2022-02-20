@@ -22,30 +22,42 @@ import static com.nc.lab2.Lab2Application.log;
 @Repository
 public class DAOInit extends JdbcDaoSupport {
 
-    private final String SQL_CHECK = "SELECT * FROM STUDENTS";
+    private final String SQL_CHECK = "SELECT * FROM STUDENT_LIST.STUDENTS";
 
+    /** Field with username information */
     @Value("${spring.datasource.username}")
     private String username;
 
+    /** Field with driver information */
     @Value("${spring.datasource.driver-class-name}")
     private String driver;
 
+    /** Field with url information */
     @Value("${spring.datasource.url}")
     private String url;
 
+    /** Field with password information */
     @Value("${spring.datasource.password}")
     private String password;
 
+    /** Field with script address information */
     @Value("${spring.datasource.script}")
     private String script;
 
 
-    @Autowired
-    private StudentDAO studentDAO;
+//    @Autowired
+//    private StudentDAO studentDAO;
 
+    /**
+     * Constructor for class
+     * @param dataSource
+     */
     @Autowired
     public DAOInit(DataSource dataSource) { this.setDataSource(dataSource); }
 
+    /**
+     * Method for initialization of Data Base
+     */
     @EventListener(ApplicationReadyEvent.class)
     public void DBInit () {
         try {

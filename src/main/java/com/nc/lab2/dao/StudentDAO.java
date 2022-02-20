@@ -23,32 +23,32 @@ public class StudentDAO extends JdbcDaoSupport {
 
 
     /** SQL query for GET_ALL Students */
-    private final String SQL_GET_ALL = "SELECT STUDENTS.ST_ID, STUDENTS.ST_NAME as ST_NAME1, GR_NAME, ST1.ST_NAME as ST_NAME2 FROM STUDENTS LEFT JOIN ST_GROUP on ST_GROUP.GR_ID = STUDENTS.ST_GR_ID left join STUDENTS ST1  on STUDENTS.ST_TEAMMATE_ID= ST1.ST_ID";
+    private final String SQL_GET_ALL = "SELECT STUDENTS.\"ST_ID\", STUDENTS.\"ST_NAME\" as ST_NAME1, \"GR_NAME\", ST1.\"ST_NAME\" as ST_NAME2 FROM STUDENT_LIST.STUDENTS LEFT JOIN STUDENT_LIST.ST_GROUP on ST_GROUP.\"GR_ID\" = STUDENTS.\"ST_GR_ID\" left join STUDENT_LIST.STUDENTS as ST1  on STUDENTS.\"ST_TEAMMATE_ID\" = ST1.\"ST_ID\"";
 
     /** SQL query for FIND Student */
-    private final String SQL_FIND = "SELECT ST_ID, ST_NAME, ST_GR_ID, ST_TEAMMATE_ID FROM STUDENTS where ST_NAME = ? ";
+    private final String SQL_FIND = "SELECT \"ST_ID\", \"ST_NAME\", \"ST_GR_ID\", \"ST_TEAMMATE_ID\" FROM STUDENT_LIST.STUDENTS where \"ST_NAME\" = ? ";
 
     /** SQL query for list of possible teammate for Student */
-    private final String SQL_SAVE_UP = "SELECT * FROM STUDENTS WHERE ST_NAME = ?";
+    private final String SQL_SAVE_UP = "SELECT * FROM STUDENT_LIST.STUDENTS WHERE \"ST_NAME\" = ?";
 
     /** SQL query for SAVE Student */
-    private final String SQL_SAVE = "UPDATE STUDENTS set ST_NAME = ?, ST_GR_ID = ?, ST_TEAMMATE_ID = ? WHERE ST_ID = ?";
+    private final String SQL_SAVE = "UPDATE STUDENT_LIST.STUDENTS set \"ST_NAME\" = ?, \"ST_GR_ID\" = ?, \"ST_TEAMMATE_ID\" = ? WHERE \"ST_ID\" = ?";
 
     /** SQL query for check that this student is head of Group */
-    private final String SQL_REMOVE_UP = "SELECT * FROM ST_GROUP WHERE GR_HEAD_ID = ?";
+    private final String SQL_REMOVE_UP = "SELECT * FROM STUDENT_LIST.ST_GROUP WHERE \"GR_HEAD_ID\" = ?";
 
     /** SQL query for REMOVE Student */
-    private final String SQL_REMOVE = "DELETE FROM STUDENTS WHERE ST_ID = ?";
+    private final String SQL_REMOVE = "DELETE FROM STUDENT_LIST.STUDENTS WHERE \"ST_ID\" = ?";
 
     /** SQL query for REMOVE Student Mark */
-    private final String SQL_REMOVE_MARK = "DELETE FROM MARKS WHERE MARK_ST_ID = ?";
+    private final String SQL_REMOVE_MARK = "DELETE FROM STUDENT_LIST.MARKS WHERE \"MARK_ST_ID\" = ?";
 
 
     /** SQL query for ADD Student */
-    private final String SQL_ADD = "INSERT INTO STUDENTS (ST_NAME, ST_GR_ID, ST_TEAMMATE_ID) VALUES (?,?,?)";
+    private final String SQL_ADD = "INSERT INTO STUDENT_LIST.STUDENTS (\"ST_NAME\", \"ST_GR_ID\", \"ST_TEAMMATE_ID\") VALUES (?,?,?)";
 
     /** SQL query for check available Groups for Student */
-    private final String SQL_GET_AWL = "SELECT GR_ID, GR_NAME FROM ST_GROUP ";
+    private final String SQL_GET_AWL = "SELECT \"GR_ID\", \"GR_NAME\" FROM STUDENT_LIST.ST_GROUP ";
 
 
     /** INFO message */
@@ -131,10 +131,13 @@ public class StudentDAO extends JdbcDaoSupport {
                     infoMessage = INFO_ADD;
                 }
             } else {
+                Object param = student.getGroupTeamMateId() == 0? null: student.getGroupTeamMateId();
                 if (student.getGroupId() == 0) {
-                    params = new Object[]{student.getName(), null, student.getGroupTeamMateId()};
+//                    params = new Object[]{student.getName(), null, student.getGroupTeamMateId()};
+                    params = new Object[]{student.getName(), null, param};
                 } else {
-                    params = new Object[]{student.getName(), student.getGroupId(), student.getGroupTeamMateId()};
+//                    params = new Object[]{student.getName(), student.getGroupId(), student.getGroupTeamMateId()};
+                    params = new Object[]{student.getName(), student.getGroupId(), param};
                 }
                 this.getJdbcTemplate().update(SQL_ADD, params);
                 infoMessage = INFO_ADD;
