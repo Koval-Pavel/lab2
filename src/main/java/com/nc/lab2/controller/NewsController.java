@@ -34,20 +34,6 @@ public class NewsController {
     @GetMapping(value = "/news")
     public ModelAndView news() {
         ModelAndView modelAndView = new ModelAndView("newsView/resultNews");
-//        if (country1.length != Integer.parseInt(quantityOfNews) ) {
-//            int qOfNews = Integer.parseInt(quantityOfNews) == 0 ? 1 : Integer.parseInt(quantityOfNews);
-//            country1 = new String[qOfNews];
-//            category1 = new String[qOfNews];
-//            for (int i = 0; i < country1.length; i++) {
-//                country1[i] = "def";
-//                System.out.println("country = " + country1[i] + ";");
-//            }
-//            for (int i = 0; i < category1.length; i++) {
-//                category1[i] = "def";
-//                System.out.println("category = " + category1[i] + ";");
-//            }
-//        }
-//        country[0] = country[0].equals("") ? "ua": country[0];
         country1[0] = country1[0].equals("def") ? "ua": country1[0];
         String result = getJSONFromSource();
         News currentNews = new News();
@@ -102,23 +88,11 @@ public class NewsController {
             uri = uri + "country" + "=" + country1[i] + "&category" + "=" +category1[i];
             if (i != (country1.length - 1)) { uri = uri + "&";}
         }
-
-//        ----------------------------------------------- old non mass------------------------------------------
-
-//        String uri = "http://app3:8787/newsjson?country1="+ country1 + "&category1=" + category1 //  for docker non mass
-//                + "&country2="+ country2 + "&category2=" + category2 // ok non mass
-//                + "&country3="+ country3 + "&category3=" + category3; // ok non mass
-
-//        String uri = "http://app3:8787/newsjson?country1="+ country1 + "&category1=" + category1 ; //  for docker ok
-////                + "&country2="+ country2 + "&category2=" + category2 // ok
-////                + "&country3="+ country3 + "&category3=" + category3; // ok
         try {
             RestTemplate restTemplate = new RestTemplate();
             return restTemplate.getForObject(uri, String.class);
         } catch (HttpServerErrorException e) {
             return null;
         }
-
     }
-
 }

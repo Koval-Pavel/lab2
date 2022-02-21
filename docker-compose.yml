@@ -12,7 +12,7 @@ services:
       - "5432:5432"
 
   app3:
-    build: ../lab3_dev
+    build: ../lab3
     container_name: app3
     image: lab3
     ports:

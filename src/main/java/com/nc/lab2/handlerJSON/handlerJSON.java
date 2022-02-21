@@ -24,23 +24,15 @@ public class handlerJSON {
      * @return Object of News
      */
     public static News parseCurrentNewsJsonMultiple(String resultJson, News news) {
-        // конвертируем строку с Json в JSONObject для дальнейшего его парсинга
         try {
             JSONObject newsJsonObject = new JSONObject(resultJson);
-            // создаю массив обьектов статей из json
             JSONArray articlesArray = (JSONArray) newsJsonObject.get("articles");
-//        article.setInfoMessage(firstArtical.get("infoMessage").toString());
-
-            //Достаю первый элемент массива
             for (Object items : articlesArray) {
                 JSONArray arrayJSON1 = (JSONArray) items;
                 for (Object items1 : arrayJSON1) {
                     JSONObject firstArtical = (JSONObject) items1;
-                    //Достаю источник (он мапа)
                     JSONObject articlesSource = (JSONObject) firstArtical.get("source");
-                    // создаю экз статьи
                     Article article = new Article();
-                    // сетерю название источник
                     article.setSourceName((articlesSource.get("name")).toString());
                     article.setPublishedAt(firstArtical.get("publishedAt").toString());
                     article.setAuthor(firstArtical.get("author").toString());
@@ -58,7 +50,6 @@ public class handlerJSON {
             log.warn(JSONEXC);
             news.setInfoMessage((JSONEXC));
         }
-//        news.getArticleList();
         return news;
     }
 }
